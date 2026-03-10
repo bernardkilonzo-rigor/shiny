@@ -61,8 +61,20 @@ ui <- fluidPage(
 )
   
 #define server logic
-server <-
+server <- function(input, output, session) {
   
+  observeEvent(input$submit, {
+    output$results <- renderPrint({
+      list(
+        Service_Name = input$service_name,
+        Rating_1_to_5 = input$rating_5,
+        Rating_1_to_10 = input$rating_10,
+        Feedback = input$feedback,
+        Contact = input$contact
+      )
+    })
+  })
+}
 
-  
 #run the application
+shinyApp(ui, server)
