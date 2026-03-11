@@ -55,7 +55,8 @@ ui <- fluidPage(
     
     mainPanel(
       h3("Submitted Information"),
-      verbatimTextOutput("results")
+      verbatimTextOutput("results"),
+      textOutput("save_status")
     )
   )
 )
@@ -64,16 +65,39 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   observeEvent(input$submit, {
-    output$results <- renderPrint({
-      list(
+    
+    #create a one-row data frame from inputs
+    new_entry <- data.frame(
         Service_Name = input$service_name,
         Rating_1_to_5 = input$rating_5,
         Rating_1_to_10 = input$rating_10,
         Feedback = input$feedback,
-        Contact = input$contact
+        Contact = input$contact,
+        Timestamp = Sys.time(),
+        stringsAsFactors = FALSE
       )
+    
+    #save to CSV (append if file exists)
+    file_path <- "feedback_data.csv"
+    
+    if (!file.exists(file_path)){
+      write.csv(new_entry, file_path, row.names = FALSE)
+    } else {
+      write.table(new_entry, file_path, append = TRUE,
+                  sep = ",", col.names = FALSE, row.names = FALSE)
+    }
+    
+    #display submitted info
+    output$results <- renderPrint({
+      new_entry
     })
-  })
+    
+    #confirmation message
+    
+    output$save_status <- renderText(
+      "Your feedback has been saved successfully"
+    )
+ })
 }
 
 #run the application
