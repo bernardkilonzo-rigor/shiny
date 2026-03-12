@@ -14,14 +14,14 @@ ui <- fluidPage(
       # Service Name
       selectInput(
         inputId = "service_name",
-        label = "Service Name",
+        label = "What service were you seeking?",
         choices = c("Deposit", "Withdraw", "Card Service", "Customer Care", "Forex")
       ),
       
       # Rating Scale 1–5
       sliderInput(
         inputId = "rating_5",
-        label = "Rating (1 to 5)",
+        label = "On a scale of 1-5 with five being the highest, how would you rate your overall satisfaction with the service you received?",
         min = 1,
         max = 5,
         value = 3
@@ -30,7 +30,7 @@ ui <- fluidPage(
       # Rating Scale 1–10
       sliderInput(
         inputId = "rating_10",
-        label = "Rating (1 to 10)",
+        label = "How likely are you to recommend the branch to a friend or colleague? (1 being Very Unlikely and 10 being Very Likely.",
         min = 1,
         max = 10,
         value = 5
@@ -39,17 +39,17 @@ ui <- fluidPage(
       # Feedback
       textAreaInput(
         inputId = "feedback",
-        label = "Feedback",
-        placeholder = "Share your experience..."
+        label = "What can we do to improve our service delivery?",
+        placeholder = "Enter your answer..."
       ),
       
       # Contact Details
       textInput(
         inputId = "contact",
-        label = "Contact Details",
-        placeholder = "Email or phone number"
+        label = "Please share your phone number or email address so that we can contact you.",
+        placeholder = "Enter your email or phone number..."
       ),
-      
+       
       actionButton("submit", "Submit")
     ),
     
