@@ -23,11 +23,11 @@ ui <- fluidPage(
         inputId = "rating_5",
         label = "On a scale of 1-5 with five being the highest, how would you rate your overall satisfaction with the service you received?",
         choices = c(
-          "Very Satisfied" = 1,
-          "Satisfied" = 2,
+          "Very Satisfied" = 5,
+          "Satisfied" = 4,
           "Neutral" = 3,
-          "Dissatisfied" = 4,
-          "Very Dissatisfied" = 5
+          "Dissatisfied" = 2,
+          "Very Dissatisfied" = 1
         )
       ),
       
