@@ -19,12 +19,16 @@ ui <- fluidPage(
       ),
       
       # Rating Scale 1–5
-      sliderInput(
+      radioButtons(
         inputId = "rating_5",
         label = "On a scale of 1-5 with five being the highest, how would you rate your overall satisfaction with the service you received?",
-        min = 1,
-        max = 5,
-        value = 3
+        choices = c(
+          "Very Satisfied" = 1,
+          "Satisfied" = 2,
+          "Neutral" = 3,
+          "Dissatisfied" = 4,
+          "Very Dissatisfied" = 5
+        )
       ),
       
       # Rating Scale 1–10
