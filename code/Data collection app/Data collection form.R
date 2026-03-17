@@ -12,10 +12,11 @@ ui <- fluidPage(
     sidebarPanel(
       
       # Service Name
-      selectInput(
+      radioButtons(
         inputId = "service_name",
         label = "What service were you seeking?",
-        choices = c("Deposit", "Withdraw", "Card Service", "Customer Care", "Forex")
+        choices = c("Deposit", "Withdraw", "Card Service", "Customer Care", "Forex"),
+        selected = character(0)
       ),
       
       # Rating Scale 1–5
@@ -28,7 +29,8 @@ ui <- fluidPage(
           "Neutral" = 3,
           "Dissatisfied" = 2,
           "Very Dissatisfied" = 1
-        )
+        ),
+        selected = character(0)
       ),
       
       # Rating Scale 1–10
@@ -37,7 +39,7 @@ ui <- fluidPage(
         label = "How likely are you to recommend the branch to a friend or colleague? (1 being Very Unlikely and 10 being Very Likely.",
         min = 1,
         max = 10,
-        value = 5
+        value = 1
       ),
       
       # Feedback
@@ -70,6 +72,13 @@ server <- function(input, output, session) {
   
   observeEvent(input$submit, {
     
+    validate(
+      need(input$service_name != "", "Please select a service."),
+      need(length(input$rating_5) > 0, "Please select a rating (1–5)."),
+      need(!is.na(input$rating_10), "Please select a rating (1–10)."),
+      need(input$feedback != "", "Please provide feedback.")
+    )
+    
     #create a one-row data frame from inputs
     new_entry <- data.frame(
         Service_Name = input$service_name,
@@ -101,6 +110,14 @@ server <- function(input, output, session) {
     output$save_status <- renderText(
       "Your feedback has been saved successfully"
     )
+    
+    # Reset form
+    updateSelectInput(session, "service_name", selected = character(0))
+    updateRadioButtons(session, "rating_5", selected = character(0))
+    updateSliderInput(session, "rating_10", value = 1)
+    updateTextAreaInput(session, "feedback", value = "")
+    updateTextInput(session, "contact", value = "")
+    
  })
 }
 
