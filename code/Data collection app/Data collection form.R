@@ -14,7 +14,7 @@ ui <- fluidPage(
       # Service Name
       radioButtons(
         inputId = "service_name",
-        label = "What service were you seeking?",
+        label = "What service were you seeking?**",
         choices = c("Deposit", "Withdraw", "Card Service", "Customer Care", "Forex"),
         selected = character(0)
       ),
@@ -22,7 +22,7 @@ ui <- fluidPage(
       # Rating Scale 1–5
       radioButtons(
         inputId = "rating_5",
-        label = "On a scale of 1-5 with five being the highest, how would you rate your overall satisfaction with the service you received?",
+        label = "On a scale of 1-5 with five being the highest, how would you rate your overall satisfaction with the service you received?**",
         choices = c(
           "Very Satisfied" = 5,
           "Satisfied" = 4,
@@ -36,7 +36,7 @@ ui <- fluidPage(
       # Rating Scale 1–10
       sliderInput(
         inputId = "rating_10",
-        label = "How likely are you to recommend the branch to a friend or colleague? (1 being Very Unlikely and 10 being Very Likely.",
+        label = "How likely are you to recommend the branch to a friend or colleague? (1 being Very Unlikely and 10 being Very Likely.**",
         min = 1,
         max = 10,
         value = 1
@@ -45,7 +45,7 @@ ui <- fluidPage(
       # Feedback
       textAreaInput(
         inputId = "feedback",
-        label = "What can we do to improve our service delivery?",
+        label = "What can we do to improve our service delivery?**",
         placeholder = "Enter your answer..."
       ),
       
