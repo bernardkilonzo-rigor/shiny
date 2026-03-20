@@ -4,11 +4,16 @@ setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\shiny\\code\\Data collec
 library(shiny)
 library(DBI)
 library(RSQLite)
+library(dplyr)
 
 #define ui
 ui <- fluidPage(
   
   titlePanel("Customer Feedback Form"),
+  
+  tabsetPanel(
+    # Tab 1: Feedback form
+    tabPanel("Submit Feedback",
   
   sidebarLayout(
     sidebarPanel(
@@ -67,7 +72,14 @@ ui <- fluidPage(
       textOutput("save_status")
     )
   )
-)
+    ),
+  # Tab 2: Data Viewer
+  tabPanel("View Submissions",
+           h3("All Feedback Records"),
+           dataTableOutput("table_view")
+           )
+    )
+  )
 
 # Define server logic
 server <- function(input, output, session) {
@@ -80,6 +92,7 @@ server <- function(input, output, session) {
   dbExecute(conn, "
     CREATE TABLE IF NOT EXISTS feedback (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      Session_ID TEXT,
       Service_Name TEXT,
       Rating_1_to_5 INTEGER,
       Rating_1_to_10 INTEGER,
@@ -88,6 +101,16 @@ server <- function(input, output, session) {
       Timestamp TEXT
     )
   ")
+  
+  # Validate email/phone
+  validate_contact <- function(x) {
+    if (x == "") return(TRUE)  # optional field
+    
+    email_pattern <- "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+    phone_pattern <- "^\\+?[0-9]{7,15}$"
+    
+    grepl(email_pattern, x) || grepl(phone_pattern, x)
+  }
   
   # Handle form submission
   observeEvent(input$submit, {
@@ -101,6 +124,7 @@ server <- function(input, output, session) {
     
     #create a one-row data frame from inputs
     new_entry <- data.frame(
+      Session_ID = session_id,
       Service_Name = input$service_name,
       Rating_1_to_5 = input$rating_5,
       Rating_1_to_10 = input$rating_10,
@@ -137,6 +161,11 @@ server <- function(input, output, session) {
     updateTextAreaInput(session, "feedback", value = "")
     updateTextInput(session, "contact", value = "")
     
+  })
+  
+  # Data view tab
+  output$table_view <- renderDataTable({
+    dbReadTable(conn, "feedback") %>% arrange(desc(id))
   })
   
   # Close DB connection when session ends
