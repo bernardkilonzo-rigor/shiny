@@ -1,9 +1,20 @@
 setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\shiny\\code\\Data collection app")
 
-#load libraries
+# Load libraries
 library(shiny)
 
-#define ui
+# Helper functions for validation
+is_valid_email <- function(x) {
+  grepl("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$", x)
+}
+
+is_valid_phone <- function(x) {
+  # Accepts digits, spaces, +, -, parentheses; must contain at least 7 digits
+  cleaned <- gsub("[^0-9]", "", x)
+  nchar(cleaned) >= 7
+}
+
+# Define ui
 ui <- fluidPage(
   
   titlePanel("Customer Feedback Form"),
@@ -79,7 +90,18 @@ server <- function(input, output, session) {
       need(input$feedback != "", "Please provide feedback.")
     )
     
-    #create a one-row data frame from inputs
+    # Optional contact validation
+    if (input$contact != "") {
+      valid_email <- is_valid_email(input$contact)
+      valid_phone <- is_valid_phone(input$contact)
+      
+      validate(
+        need(valid_email || valid_phone,
+             "Please enter a valid email address or phone number, or leave the field empty.")
+      )
+    }
+    
+    # Create a one-row data frame from inputs
     new_entry <- data.frame(
         Service_Name = input$service_name,
         Rating_1_to_5 = input$rating_5,
