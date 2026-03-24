@@ -83,22 +83,35 @@ server <- function(input, output, session) {
   
   observeEvent(input$submit, {
     
-    validate(
-      need(input$service_name != "", "Please select a service."),
-      need(length(input$rating_5) > 0, "Please select a rating (1–5)."),
-      need(!is.na(input$rating_10), "Please select a rating (1–10)."),
-      need(input$feedback != "", "Please provide feedback.")
-    )
+    if (input$service_name == "") {
+      showNotification("Please select a service.", type = "error")
+      return()
+    }
     
-    # Optional contact validation
+    if (length(input$rating_5) == 0) {
+      showNotification("Please select a rating (1–5).", type = "error")
+      return()
+    }
+    
+    if (is.na(input$rating_10)) {
+      showNotification("Please select a rating (1–10).", type = "error")
+      return()
+    }
+    
+    if (input$feedback == "") {
+      showNotification("Please provide feedback.", type = "error")
+      return()
+    }
+    
+    #optional contact validation
     if (input$contact != "") {
       valid_email <- is_valid_email(input$contact)
       valid_phone <- is_valid_phone(input$contact)
       
-      validate(
-        need(valid_email || valid_phone,
-             "Please enter a valid email address or phone number, or leave the field empty.")
-      )
+      if (!(valid_email || valid_phone)) {
+        showNotification("Please enter a valid email or phone number.", type = "error")
+        return()
+      }
     }
     
     # Create a one-row data frame from inputs
