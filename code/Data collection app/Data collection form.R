@@ -83,7 +83,7 @@ server <- function(input, output, session) {
   
   observeEvent(input$submit, {
     
-    if (input$service_name == "") {
+    if (is.null(input$service_name) || input$service_name == "") {
       showNotification("Please select a service.", type = "error")
       return()
     }
@@ -147,7 +147,7 @@ server <- function(input, output, session) {
     )
     
     # Reset form
-    updateSelectInput(session, "service_name", selected = character(0))
+    updateRadioButtons(session, "service_name", selected = character(0))
     updateRadioButtons(session, "rating_5", selected = character(0))
     updateSliderInput(session, "rating_10", value = 1)
     updateTextAreaInput(session, "feedback", value = "")
