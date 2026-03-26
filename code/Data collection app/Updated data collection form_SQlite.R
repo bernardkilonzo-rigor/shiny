@@ -6,6 +6,17 @@ library(DBI)
 library(RSQLite)
 library(dplyr)
 
+# Helper functions for validation
+is_valid_email <- function(x) {
+  grepl("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$", x)
+}
+
+is_valid_phone <- function(x) {
+  # Accepts digits, spaces, +, -, parentheses; must contain at least 7 digits
+  cleaned <- gsub("[^0-9]", "", x)
+  nchar(cleaned) >= 7
+}
+
 #define ui
 ui <- fluidPage(
   
@@ -102,25 +113,39 @@ server <- function(input, output, session) {
     )
   ")
   
-  # Validate email/phone
-  validate_contact <- function(x) {
-    if (x == "") return(TRUE)  # optional field
-    
-    email_pattern <- "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
-    phone_pattern <- "^\\+?[0-9]{7,15}$"
-    
-    grepl(email_pattern, x) || grepl(phone_pattern, x)
-  }
-  
   # Handle form submission
   observeEvent(input$submit, {
     
-    validate(
-      need(input$service_name != "", "Please select a service."),
-      need(length(input$rating_5) > 0, "Please select a rating (1–5)."),
-      need(!is.na(input$rating_10), "Please select a rating (1–10)."),
-      need(input$feedback != "", "Please provide feedback.")
-    )
+    if (is.null(input$service_name) || input$service_name == "") {
+      showNotification("Please select a service.", type = "error")
+      return()
+    }
+    
+    if (length(input$rating_5) == 0) {
+      showNotification("Please select a rating (1–5).", type = "error")
+      return()
+    }
+    
+    if (is.na(input$rating_10)) {
+      showNotification("Please select a rating (1–10).", type = "error")
+      return()
+    }
+    
+    if (input$feedback == "") {
+      showNotification("Please provide feedback.", type = "error")
+      return()
+    }
+    
+    #optional contact validation
+    if (input$contact != "") {
+      valid_email <- is_valid_email(input$contact)
+      valid_phone <- is_valid_phone(input$contact)
+      
+      if (!(valid_email || valid_phone)) {
+        showNotification("Please enter a valid email or phone number.", type = "error")
+        return()
+      }
+    }
     
     #create a one-row data frame from inputs
     new_entry <- data.frame(
@@ -155,7 +180,7 @@ server <- function(input, output, session) {
     )
     
     # Reset form
-    updateSelectInput(session, "service_name", selected = character(0))
+    updateRadioButtons(session, "service_name", selected = character(0))
     updateRadioButtons(session, "rating_5", selected = character(0))
     updateSliderInput(session, "rating_10", value = 1)
     updateTextAreaInput(session, "feedback", value = "")
