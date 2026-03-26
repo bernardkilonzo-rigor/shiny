@@ -149,7 +149,7 @@ server <- function(input, output, session) {
     
     #create a one-row data frame from inputs
     new_entry <- data.frame(
-      Session_ID = session_id,
+      Session_ID = session$token,
       Service_Name = input$service_name,
       Rating_1_to_5 = input$rating_5,
       Rating_1_to_10 = input$rating_10,
