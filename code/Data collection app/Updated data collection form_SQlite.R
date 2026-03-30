@@ -33,7 +33,7 @@ ui <- fluidPage(
       radioButtons(
         inputId = "service_name",
         label = "What service were you seeking?**",
-        choices = c("Deposit", "Withdraw", "Card Service", "Customer Care", "Forex"),
+        choices = c("Deposit", "Withdraw", "Card Service", "Customer Care", "Forex","Mobile Banking","Lending"),
         selected = character(0)
       ),
       
