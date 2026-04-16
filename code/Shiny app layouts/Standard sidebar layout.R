@@ -5,14 +5,30 @@ library(shiny)
 library(bslib)
 
 #define ui
-ui <- fluidPage()
+ui <- page_sidebar(
+  sidebar = sidebar(
+    title = "Filters"
+  ),
+  #main content
+  layout_columns(
+    col_widths = c(4,4,4),
+    card(),card(),card()
+  ),
+  layout_columns(
+    col_widths = c(6,6),
+    card(),card()
+  ),
+  layout_columns(
+    col_widths = 12,
+    card()
+  )
+)
   
   
 #define server
-server < - function(input, output, session){
+server <- function(input, output, session){
   
 }
   
-
 #run the application
 shinyApp(ui = ui, server = server)
