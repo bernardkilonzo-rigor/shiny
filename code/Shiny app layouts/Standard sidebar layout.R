@@ -11,19 +11,18 @@ ui <- page_sidebar(
   ),
   #main content
   layout_columns(
+    col_widths = c(3,3,3,3),
+    card(),card(),card(),card()
+  ),
+  layout_columns(
     col_widths = c(4,4,4),
     card(),card(),card()
   ),
   layout_columns(
     col_widths = c(6,6),
     card(),card()
-  ),
-  layout_columns(
-    col_widths = 12,
-    card()
   )
 )
-  
   
 #define server
 server <- function(input, output, session){
