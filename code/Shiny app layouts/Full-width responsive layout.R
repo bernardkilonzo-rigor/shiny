@@ -5,7 +5,13 @@ library(shiny)
 library(bslib)
 
 #define ui
-ui <- page_fillable(
+ui <- page_navbar(
+  title = "Executive Sales Dashboard",
+  theme = bs_theme(version = 5, bootswatch = "flatly"),
+  
+  nav_panel(
+    NULL, #hides tab label
+  page_fillable(
   #1st row: 4 cards
   layout_columns(
     col_widths = c(3,3,3,3),
@@ -23,6 +29,8 @@ ui <- page_fillable(
     col_widths = c(6,6),
     card(),card()
   )
+)
+)
 )
 
 #define server

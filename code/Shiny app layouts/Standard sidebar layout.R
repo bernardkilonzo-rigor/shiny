@@ -57,6 +57,7 @@ ui <- page_navbar(
   
   #spacer to push navigation items
   nav_spacer(),
+  
   #custom theme with dark navigation bar
   theme = bs_theme(
     bootswatch = "flatly",
