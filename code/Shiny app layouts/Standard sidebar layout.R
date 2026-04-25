@@ -6,14 +6,14 @@ library(bslib)
 
 #define ui
 ui <- page_navbar(
-  title = "My Dashboard",
-  theme = bs_theme(
-    bootswatch = "flatly",
-    primary = "#000000",
-    navbar_bg = "#000000",
-    navbar_fg = "white",
-    navbar_hover_color = "#e8f0fe"
+  title = div(
+    img(src = "https://static.wixstatic.com/media/e16c6a_9e0ce1add1bb4b6685e7ee2d45ed3509~mv2_d_7500_7500_s_4_2.png/v1/crop/x_1175,y_3213,w_5200,h_1013/fill/w_610,h_100,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Original.png", 
+        height = "40px", style = "margin-right: 10px;"),
+    "Executive Dashboard"
   ),
+  
+  #spacer to push navigation items
+  nav_spacer(),
   
   # ---- NAV ITEMS ----
   nav("Dashboard",
@@ -53,7 +53,18 @@ ui <- page_navbar(
         card_header("Settings"),
         "Settings content goes here"
       )
-  )
+  ),
+  
+  #spacer to push navigation items
+  nav_spacer(),
+  #custom theme with dark navigation bar
+  theme = bs_theme(
+    bootswatch = "flatly",
+    primary = "#000000",
+    navbar_bg = "#000000",
+    navbar_fg = "white",
+    navbar_hover_color = "gray40"
+  ),
 )
   
 #define server
