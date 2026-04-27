@@ -51,7 +51,7 @@ ui <- page_navbar(
       card(
         full_screen = TRUE,
         card_header("Settings"),
-        "Settings content goes here"
+        "Your app settings allow users to customize their experience by choosing the theme (light, dark, or system), selecting the preferred language, setting a default landing page, and resetting the app to its original state; configuring data options such as selecting the data source, enabling auto‑refresh, uploading CSV or Excel files, and applying automatic data cleaning; adjusting user preferences like default region, date range, chart type, and visibility of advanced options; optimizing performance through caching, row limits, plot quality, and async loading; managing access with user roles, password protection, API keys, and visibility of sensitive metrics; controlling notifications including email alerts, thresholds, daily summaries, and sound cues; personalizing appearance through card density, font size, sidebar position, and scrollbars; defining reporting defaults such as export format, logo inclusion, theme, and page size; and configuring AI features like enabling summaries, selecting the model type, adjusting temperature and token limits, and uploading documents for knowledge‑based responses."
       )
   ),
   
