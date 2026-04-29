@@ -4,6 +4,9 @@ setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\shiny\\code\\Executive d
 library(shiny)
 library(bslib)
 
+#load data set
+Finance_data <- read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/refs/heads/main/data/Financial%20Data.csv")
+
 #define ui
 ui <- page_navbar(
   title = "Executive Sales Dashboard",
