@@ -8,11 +8,12 @@ library(janitor)
 
 #load data set
 Finance_data <- read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/refs/heads/main/data/Financial%20Data_v2.csv", check.names = FALSE)%>%
-  clean_names()
+  clean_names()%>%
+  mutate(net_profit_margin_percent = parse_number(net_profit_margin_percent)/100)
 
 #define ui
 ui <- page_navbar(
-  title = "Executive Sales Dashboard",
+  title = "Executive Dashboard",
   theme = bs_theme(version = 5, bootswatch = "flatly"),
   
   nav_panel(
@@ -21,98 +22,81 @@ ui <- page_navbar(
       #1st row: 4 cards
       layout_columns(
         col_widths = c(4,4,4),
-        card(
-          value_box(
+        value_box(
             title = "Income",
             value = textOutput("income"),
             showcase = bsicons::bs_icon("pie-chart-fill"),
-            theme = "warning"
-          )
-        ),
+            theme = "primary"
+          ),
         
-        card(
-          value_box(
+        value_box(
             title = "Gross Profit",
             value = textOutput("gross_profit"),
             showcase = bsicons::bs_icon("bar-chart-fill"),
-            theme = "primary"
-          )
-        ),
+            theme = "warning"
+          ),
         
-        card(
-          value_box(
+        value_box(
             title = "Net Profit",
             value = textOutput("net_profit"),
             showcase = bsicons::bs_icon("graph-up"),
-            theme = "success"
+            theme = "info"
           )
-        )
-      ),
+        ),
       
       #2nd row: 3 cards
       layout_columns(
         col_widths = c(4,4,4),
-        card(
-          value_box(
+        value_box(
             title = "Operating Profit",
             value = textOutput("operating_profit"),
             showcase = bsicons::bs_icon("clipboard-data"),
-            theme = "info"
-          )
-        ),
+            theme = "warning"
+          ),
         
-        card(
-          value_box(
+        value_box(
             title = "Expenses",
             value = textOutput("expenses"),
-            showcase = bsicons::bs_icon("speedometer"),
+            showcase = bsicons::bs_icon("coin"),
+            theme = "primary"
+          ),
+        
+        value_box(
+            title = "Total Operating Expenses",
+            value = textOutput("total_operating_expenses"),
+            showcase = bsicons::bs_icon("currency-exchange"),
             theme = "danger"
           )
         ),
-        
-        card(
-          value_box(
-            title = "Total Operating Expenses",
-            value = textOutput("total_operating_expenses"),
-            showcase = bsicons::bs_icon("activity"),
-            theme = "primary"
-          )
-        )
-      ),
       
       #3rd row: 2 cards
       layout_columns(
         col_widths = c(4,4,4),
-        card(
-          value_box(
+        value_box(
             title = "Cost of Goods Sold",
             value = textOutput("cost_of_goods_sold"),
-            showcase = bsicons::bs_icon("graph-down"),
-            theme = "success"
-          )
-        ),
+            showcase = bsicons::bs_icon("currency-dollar"),
+            theme = "danger"
+          ),
         
-        card(
-          value_box(
+        value_box(
             title = "Net Profit Margin",
             value = textOutput("net_profit_margin"),
-            showcase = bsicons::bs_icon("lightning-fill"),
-            theme = "warning"
-          )
-        ),
+            showcase = bsicons::bs_icon("highlights"),
+            theme = "dark"
+          ),
         
-        card(
-          value_box(
+        value_box(
             title = "Taxes",
             value = textOutput("taxes"),
-            showcase = bsicons::bs_icon("bullseye"),
-            theme = "primary"
+            showcase = bsicons::bs_icon("cash-coin"),
+            theme = "success"
           )
         )
       )
-    )
-  )
+   )
 )
+
 
 #define server
 server <- function(input, output, session){
@@ -153,7 +137,9 @@ server <- function(input, output, session){
   })
   
   output$net_profit_margin <- renderText({
-    format(sum(filtered_data()$"net_profit_margin_percent"), big.mark = ",")
+    scales::percent(
+      mean(filtered_data()$"net_profit_margin_percent"), accuracy = 0.1
+    )
   })
   
   output$taxes <- renderText({
