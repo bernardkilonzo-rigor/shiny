@@ -9,12 +9,60 @@ library(janitor)
 #load data set
 Finance_data <- read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/refs/heads/main/data/Financial%20Data_v2.csv", check.names = FALSE)%>%
   clean_names()%>%
-  mutate(net_profit_margin_percent = parse_number(net_profit_margin_percent)/100)
+  mutate(net_profit_margin_percent = parse_number(net_profit_margin_percent)/100,
+         year = year(dmy(date)))
 
 #define ui
 ui <- page_navbar(
   title = "Executive Dashboard",
   theme = bs_theme(version = 5, bootswatch = "flatly"),
+  
+  # Add custom CSS for larger toggle button
+  tags$head(
+    tags$style(HTML("
+                    
+      .navbar-brand {
+        font-size: 32px !important;
+        font-weight: bold !important;
+      }
+      
+      .form-switch .form-check-input {
+        width: 80px !important;
+        height: 40px !important;
+        background-color: white !important;
+        border: 2px solid #ccc !important;
+      }
+      .form-switch .form-check-input:checked {
+        background-color: #e9ecef !important;
+        border: 2px solid #ccc !important;
+      }
+      .form-switch .form-check-input::after {
+        width: 36px !important;
+        height: 36px !important;
+        background-color: #0d6efd !important;
+      }
+      .year-toggle-label {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    "))
+  ),
+  
+  # Add year toggle to navbar
+  nav_spacer(),
+  nav_item(
+    div(
+      style = "display: flex; align-items: center; gap: 15px; padding: 8px;",
+      tags$span("2024", style = "font-weight: bold;"),
+      input_switch(
+        id = "year_toggle",
+        label = NULL,
+        value = FALSE,
+        width = "80px"
+      ),
+      tags$span("2025", style = "font-weight: bold;")
+    )
+  ),
   
   nav_panel(
     NULL, #hides tab label
@@ -103,8 +151,18 @@ server <- function(input, output, session){
   
   #reactive data filtering
   filtered_data <- reactive({
-    data <-  Finance_data
+    # Toggle returns FALSE for 2024, TRUE for 2025
+    selected_year <- ifelse(input$year_toggle, 2025, 2024)
     
+    Finance_data %>%
+      filter(year == selected_year)
+    
+  })
+  
+  # Display selected year
+  output$selected_year_display <- renderText({
+    selected_year <- ifelse(input$year_toggle, 2025, 2024)
+    paste("Showing performance for:", selected_year)
   })
   
   #calculating sums for each indicator
