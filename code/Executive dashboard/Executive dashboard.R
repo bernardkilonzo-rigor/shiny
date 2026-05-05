@@ -44,6 +44,7 @@ ui <- page_navbar(
       .year-toggle-label {
         font-size: 18px;
         font-weight: bold;
+        color: white !important;
       }
     "))
   ),
@@ -53,14 +54,14 @@ ui <- page_navbar(
   nav_item(
     div(
       style = "display: flex; align-items: center; gap: 15px; padding: 8px;",
-      tags$span("2024", style = "font-weight: bold;"),
+      tags$span("2024", class = "year-toggle-label"),
       input_switch(
         id = "year_toggle",
         label = NULL,
         value = FALSE,
         width = "80px"
       ),
-      tags$span("2025", style = "font-weight: bold;")
+      tags$span("2025", class = "year-toggle-label")
     )
   ),
   
@@ -75,21 +76,21 @@ ui <- page_navbar(
             title = "Income",
             value = textOutput("income"),
             showcase = bsicons::bs_icon("pie-chart-fill"),
-            theme = "primary"
+            theme = value_box_theme(bg = "#bfb304", fg = "#ffffff")
           ),
         
         value_box(
             title = "Gross Profit",
             value = textOutput("gross_profit"),
             showcase = bsicons::bs_icon("bar-chart-fill"),
-            theme = "warning"
+            theme = value_box_theme(bg = "#72874e", fg = "#ffffff")
           ),
         
         value_box(
             title = "Net Profit",
             value = textOutput("net_profit"),
             showcase = bsicons::bs_icon("graph-up"),
-            theme = "info"
+            theme = value_box_theme(bg = "#486f85", fg = "#ffffff")
           )
         ),
       
@@ -100,21 +101,21 @@ ui <- page_navbar(
             title = "Operating Profit",
             value = textOutput("operating_profit"),
             showcase = bsicons::bs_icon("clipboard-data"),
-            theme = "warning"
+            theme = value_box_theme(bg = "#023742", fg = "#ffffff")
           ),
         
         value_box(
             title = "Expenses",
             value = textOutput("expenses"),
             showcase = bsicons::bs_icon("coin"),
-            theme = "primary"
+            theme = value_box_theme(bg = "#a68b03", fg = "#ffffff")
           ),
         
         value_box(
             title = "Total Operating Expenses",
             value = textOutput("total_operating_expenses"),
             showcase = bsicons::bs_icon("currency-exchange"),
-            theme = "danger"
+            theme = value_box_theme(bg = "#453947", fg = "#ffffff")
           )
         ),
       
@@ -125,21 +126,21 @@ ui <- page_navbar(
             title = "Cost of Goods Sold",
             value = textOutput("cost_of_goods_sold"),
             showcase = bsicons::bs_icon("currency-dollar"),
-            theme = "danger"
+            theme = value_box_theme(bg = "#b06458", fg = "#ffffff")
           ),
         
         value_box(
             title = "Net Profit Margin",
             value = textOutput("net_profit_margin"),
             showcase = bsicons::bs_icon("highlights"),
-            theme = "dark"
+            theme = value_box_theme(bg = "#7b8b8c", fg = "#ffffff")
           ),
         
         value_box(
             title = "Taxes",
             value = textOutput("taxes"),
             showcase = bsicons::bs_icon("cash-coin"),
-            theme = "success"
+            theme = value_box_theme(bg = "#c28861", fg = "#ffffff")
           )
         )
       )
