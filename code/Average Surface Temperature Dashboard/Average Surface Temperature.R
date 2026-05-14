@@ -10,6 +10,19 @@ library(ggridges)
 #load data set
 surface_temperature<-read_csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/global%20surface%20temperature.csv")
 
+#pivoting data set
+surface_temperature<-surface_temperature%>%
+  pivot_longer(cols = -c(Entity,Code, Month),
+               names_to = "Year",
+               values_to = "Temp")
+
+#rounding-off values & computing month names
+surface_temperature<-surface_temperature%>%
+  mutate(tempr = round(Temp,3))%>%
+  mutate(mon = month.name[Month])
+
+#ordering months
+surface_temperature$mon<-factor(surface_temperature$mon, levels = month.name)
 
 #define ui
 ui <- page_navbar(
