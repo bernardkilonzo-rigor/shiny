@@ -6,6 +6,7 @@ library(bslib)
 library(tidyverse)
 library(janitor)
 library(ggridges)
+library(plotly)
 
 #load data set
 surface_temperature<-read_csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/global%20surface%20temperature.csv")
@@ -56,7 +57,7 @@ ui <- page_navbar(
         card(
           card_header("Average Surface Temperatures"),
           card_body(
-            renderPlot(
+            plotOutput(
               "Temperature_plot"
             )
           )
@@ -70,13 +71,31 @@ ui <- page_navbar(
 server <- function(input, output, session) {
   
   #reactive data filtering
-  filtered_data <- reactive(
+  filtered_data <- reactive({
     surface_temperature%>%
-      filter("Entity" == surface_temperature$Entity)
-    )
+      filter(Entity == surface_temperature$Entity)
+   })
+  
+  #creating the plot
+  output$Temperature_plot <- renderPlot(
+    
+    surface_temperature%>%
+      ggplot(aes(x = tempr, y = mon, fill = stat(x)))+
+      geom_density_ridges_gradient(color = "gray50",linewidth = 0.4)+
+      scale_fill_gradient2(low = "#1565c0", mid = "#D3DBE7", high = "#c62828", midpoint = 0)+
+      labs(caption = "Data Source: NASA/GISS",
+           y ="Month", x = "Average surface temperature (in degrees Celsius)",
+           fill = "Temp")+
+      theme(panel.grid = element_line(color = "#ececec", linewidth = 0.1),
+            panel.background = element_rect(fill = "#fdfbfb"),
+            axis.ticks = element_blank(),
+            plot.title = element_text(family = "sans",face = "bold"),
+            plot.subtitle = element_text(family = "sans",face = "italic"),
+            plot.caption = element_text(family = "mono",face = "italic")
+      )
+  )
+  
 }
   
- 
-
 #run application
 shinyApp(ui = ui, server = server)
