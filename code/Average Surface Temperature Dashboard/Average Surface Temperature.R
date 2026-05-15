@@ -26,7 +26,7 @@ surface_temperature$mon<-factor(surface_temperature$mon, levels = month.name)
 
 #define ui
 ui <- page_navbar(
-  title = "Average Surface Temperatures",
+  title = "Global Surface Temperatures (1950 - 2024)",
   theme = bs_theme(version = 5, bootswatch = "flatly"),
   
   nav_panel(
@@ -37,22 +37,30 @@ ui <- page_navbar(
         col_widths = c(3,9),
         card(
           # ---- Paragraph 1 ----
-          p("Paragraph"),
+          p("The planet's average surface temperature has risen about 2 degrees Fahrenheit (1 degrees Celsius) since the late 19th century, a change driven largely by increased carbon dioxide emissions into the atmosphere and other human activities."),
         
         # ---- Filter Input ----
         selectInput(
-          inputId = "region",
-          label = "Select Region",
-          choices = c("Nairobi", "Mombasa", "Kisumu","Nakuru","Eldoret"),
+          inputId = "Entity",
+          label = "Select Country",
+          choices = c("All", unique(surface_temperature$Entity)),
+          selected = "Russia",
           width = "100%"
         ),
         
         # ----- Paragraph 2 -----
         p(
-          "test"
+          "This visualization highlights global surface temperature patterns from 1950 to 2024, revealing how temperatures shift from January through December. Use the filter to explore the average surface temperature for each country and compare trends across regions."
         )
         ),
-        card()
+        card(
+          card_header("Average Surface Temperatures"),
+          card_body(
+            renderPlot(
+              "Temperature_plot"
+            )
+          )
+        )
       )
     )
   )
