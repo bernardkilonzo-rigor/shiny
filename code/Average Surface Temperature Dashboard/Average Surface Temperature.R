@@ -69,8 +69,14 @@ ui <- page_navbar(
 #define server
 server <- function(input, output, session) {
   
+  #reactive data filtering
+  filtered_data <- reactive(
+    surface_temperature%>%
+      filter("Entity" == surface_temperature$Entity)
+    )
 }
-
+  
+ 
 
 #run application
 shinyApp(ui = ui, server = server)
