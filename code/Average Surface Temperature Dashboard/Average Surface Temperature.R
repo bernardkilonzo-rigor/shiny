@@ -72,14 +72,18 @@ server <- function(input, output, session) {
   
   #reactive data filtering
   filtered_data <- reactive({
-    surface_temperature%>%
-      filter(Entity == surface_temperature$Entity)
-   })
+    if(input$Entity == "All") {
+      surface_temperature
+    } else {
+      surface_temperature %>%
+        filter(Entity == input$Entity)
+    }
+  })
   
   #creating the plot
-  output$Temperature_plot <- renderPlot(
+  output$Temperature_plot <- renderPlot({
     
-    surface_temperature%>%
+    filtered_data()%>%
       ggplot(aes(x = tempr, y = mon, fill = stat(x)))+
       geom_density_ridges_gradient(color = "gray50",linewidth = 0.4)+
       scale_fill_gradient2(low = "#1565c0", mid = "#D3DBE7", high = "#c62828", midpoint = 0)+
@@ -93,7 +97,7 @@ server <- function(input, output, session) {
             plot.subtitle = element_text(family = "sans",face = "italic"),
             plot.caption = element_text(family = "mono",face = "italic")
       )
-  )
+  })
   
 }
   
