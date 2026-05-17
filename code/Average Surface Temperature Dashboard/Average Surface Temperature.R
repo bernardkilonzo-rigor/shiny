@@ -55,7 +55,6 @@ ui <- page_navbar(
         )
         ),
         card(
-          card_header("Average Surface Temperatures"),
           card_body(
             plotOutput(
               "Temperature_plot"
