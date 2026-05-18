@@ -38,7 +38,7 @@ ui <- page_navbar(
         col_widths = c(3,9),
         card(
           # ---- Paragraph 1 ----
-          p("The planet's average surface temperature has risen about 2 degrees Fahrenheit (1 degrees Celsius) since the late 19th century, a change driven largely by increased carbon dioxide emissions into the atmosphere and other human activities."),
+          p("This visualization highlights global surface temperature patterns from 1950 to 2024, revealing how temperatures shift from January through December. Use the filter to explore the average surface temperature for each country and compare trends across regions."),
         
         # ---- Filter Input ----
         selectInput(
@@ -51,7 +51,7 @@ ui <- page_navbar(
         
         # ----- Paragraph 2 -----
         p(
-          "This visualization highlights global surface temperature patterns from 1950 to 2024, revealing how temperatures shift from January through December. Use the filter to explore the average surface temperature for each country and compare trends across regions."
+          "NASA/GISS Global Surface Temperatures refers to the GISS Surface Temperature Analysis (GISTEMP), a long‑running scientific dataset that tracks how Earth’s surface temperatures have changed over time. It is produced by NASA’s Goddard Institute for Space Studies (GISS) and is one of the world’s primary references for understanding global warming trends."
         )
         ),
         card(
