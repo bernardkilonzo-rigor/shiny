@@ -92,9 +92,11 @@ server <- function(input, output, session) {
       theme(panel.grid = element_line(color = "#ececec", linewidth = 0.1),
             panel.background = element_rect(fill = "#fdfbfb"),
             axis.ticks = element_blank(),
-            plot.title = element_text(family = "sans",face = "bold"),
-            plot.subtitle = element_text(family = "sans",face = "italic"),
-            plot.caption = element_text(family = "mono",face = "italic")
+            axis.text = element_text(size = 14),
+            axis.title = element_text(size = 16),
+            legend.text = element_text(size = 12),
+            legend.title = element_text(size = 14),
+            plot.caption = element_text(family = "mono",face = "italic", size = 14)
       )
   })
   
