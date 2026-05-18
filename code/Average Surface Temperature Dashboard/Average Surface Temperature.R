@@ -27,7 +27,7 @@ surface_temperature$mon<-factor(surface_temperature$mon, levels = month.name)
 
 #define ui
 ui <- page_navbar(
-  title = "Global Surface Temperatures (1950 - 2024)",
+  title = tags$strong("Global Surface Temperatures (1950 - 2024)"),
   theme = bs_theme(version = 5, bootswatch = "flatly"),
   
   nav_panel(
@@ -44,7 +44,7 @@ ui <- page_navbar(
         selectInput(
           inputId = "Entity",
           label = "Select Country",
-          choices = c("All", unique(surface_temperature$Entity)),
+          choices = c(unique(surface_temperature$Entity)),
           selected = "Russia",
           width = "100%"
         ),
@@ -71,12 +71,8 @@ server <- function(input, output, session) {
   
   #reactive data filtering
   filtered_data <- reactive({
-    if(input$Entity == "All") {
-      surface_temperature
-    } else {
-      surface_temperature %>%
-        filter(Entity == input$Entity)
-    }
+    surface_temperature %>%
+      filter(Entity == input$Entity)
   })
   
   #creating the plot
