@@ -66,7 +66,47 @@ ui <- page_navbar(
         title = "Filters",
         open = "closed", #sidebar is hidden by default
         
+        #Country filter
+        selectInput(
+          "country",
+          "Select Country",
+          choices = c("All", unique(survey_data$country))
+        ),
+        
+        #Income level filter
+        selectInput(
+          "income_level",
+          "Select Income",
+          choices = c("All", unique(survey_data$income_level))
+        ),
+        
+        #Education filter
+        selectInput(
+          "highest_qualifications",
+          "Select Education",
+          choices = c("All", unique(survey_data$highest_qualifications))
+        ),
+        
         #Gender filter
+        selectInput(
+          "gender",
+          "Select Gender",
+          choices = c("All", unique(survey_data$gender))
+        ),
+        
+        #Employment filter
+        selectInput(
+          "employment_status",
+          "Select Employment",
+          choices = c("All", unique(survey_data$employment_status))
+        ),
+        
+        #Age group filter
+        selectInput(
+          "age_group",
+          "Select Age_Group",
+          choices = c("All", unique(survey_data$age_group))
+        )
         
       ),
       
