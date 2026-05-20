@@ -26,18 +26,18 @@ ui <- page_navbar(
           col_widths = 12,
           row_heights = c(1,1),
         card(
-          card_header(),
+          card_header("Gender"),
           card_body()
         ),
         card(
-          card_header(),
+          card_header("Employment Status"),
           card_body()
         )
         ),
       
       # right column (with merged cards)
         card(
-          card_header(),
+          card_header("Location Analysis"),
           card_body()
         )
       ),
@@ -46,15 +46,15 @@ ui <- page_navbar(
       layout_columns(
         col_widths = c(4,4,4),
         card(
-          card_header(),
+          card_header("Level of Qualification"),
           card_body()
         ),
         card(
-          card_header(),
+          card_header("Age Group"),
           card_body()
         ),
         card(
-          card_header(),
+          card_header("Income Level"),
           card_body()
         )
       )
