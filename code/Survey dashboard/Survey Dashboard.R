@@ -12,8 +12,16 @@ survey_data <-read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/d
 #manipulating data (pivoting & grouping)
 survey_data <- survey_data%>%
   pivot_longer(cols = c(q2a:q5_6), names_to = "Quiz", values_to = "Responses")%>%
-  pivot_longer(cols = c(q6a:q6e), names_to = "Q6", values_to = "Values")
-View(survey_data)
+  pivot_longer(cols = c(q6a:q6e), names_to = "Q6", values_to = "Values")%>%
+  mutate(Quiz_group = 
+           case_when(
+             str_detect(Quiz, "^q2") ~ "Q2",
+             str_detect(Quiz, "^q3") ~ "Q3",
+             str_detect(Quiz, "^q4") ~ "Q4",
+             str_detect(Quiz, "^q5") ~ "Q5",
+             TRUE ~ "Others"
+           ))
+
 #define ui
 ui <- page_navbar(
   title = "Survey Analysis Dashboard",
