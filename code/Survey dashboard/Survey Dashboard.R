@@ -3,11 +3,17 @@ setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\shiny\\code\\Survey dash
 library(shiny)
 library(bslib)
 library(janitor)
+library(tidyverse)
 
 #load data set
 survey_data <-read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Survey%20Data.csv")%>%
   clean_names()
 
+#manipulating data (pivoting & grouping)
+survey_data <- survey_data%>%
+  pivot_longer(cols = c(q2a:q5_6), names_to = "Quiz", values_to = "Responses")%>%
+  pivot_longer(cols = c(q6a:q6e), names_to = "Q6", values_to = "Values")
+View(survey_data)
 #define ui
 ui <- page_navbar(
   title = "Survey Analysis Dashboard",
