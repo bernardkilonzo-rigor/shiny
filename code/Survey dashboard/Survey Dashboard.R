@@ -114,23 +114,19 @@ ui <- page_navbar(
       ),
       
       # Main content area
-      # 1st row: 4 metric cards
+      # 1st row: 3 visualization cards
       layout_columns(
-        col_widths = c(3, 3, 3, 3),
+        col_widths = c(4, 4, 4),
         card(
-          card_header(),
+          card_header("Customer acquisition channels"),
           card_body()
         ),
         card(
-          card_header(),
+          card_header("% completed the course"),
           card_body()
         ),
         card(
-          card_header(),
-          card_body()
-        ),
-        card(
-          card_header(),
+          card_header("Most helpful content"),
           card_body()
         )
       ),
@@ -139,28 +135,15 @@ ui <- page_navbar(
       layout_columns(
         col_widths = c(4, 4, 4),
         card(
-          card_header(),
+          card_header("Level of satisfaction"),
           card_body()
         ),
         card(
-          card_header(),
+          card_header("Overall quality of materials"),
           card_body()
         ),
         card(
-          card_header(),
-          card_body()
-        )
-      ),
-      
-      # 3rd row: 2 detailed analysis cards
-      layout_columns(
-        col_widths = c(6, 6),
-        card(
-          card_header(),
-          card_body()
-        ),
-        card(
-          card_header(),
+          card_header("Net Promoter Score (NPS)"),
           card_body()
         )
       )
