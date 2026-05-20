@@ -17,26 +17,14 @@ ui <- page_navbar(
   nav_panel(
     title = "Demographic Dashboard",
     page_fillable(
-      # 1st row: 3 cards for demographic overview
+      # left column
       layout_columns(
-        col_widths = c(4, 4, 4),
-        card(
-          card_header(),
-          card_body()
-        ),
-        card(
-          card_header(),
-          card_body()
-        ),
-        card(
-          card_header(),
-          card_body()
-        )
-      ),
-      
-      # 2nd row: 2 larger cards
-      layout_columns(
-        col_widths = c(6, 6),
+        col_widths = c(4, 8),
+        row_heights = c(1,1),
+        #left column with two stacked cards
+        layout_columns(
+          col_widths = 12,
+          row_heights = c(1,1),
         card(
           card_header(),
           card_body()
@@ -45,11 +33,26 @@ ui <- page_navbar(
           card_header(),
           card_body()
         )
+        ),
+      
+      # right column (with merged cards)
+        card(
+          card_header(),
+          card_body()
+        )
       ),
       
-      # 3rd row: 1 full-width card
+      # 3rd row: 3 cards
       layout_columns(
-        col_widths = 12,
+        col_widths = c(4,4,4),
+        card(
+          card_header(),
+          card_body()
+        ),
+        card(
+          card_header(),
+          card_body()
+        ),
         card(
           card_header(),
           card_body()
