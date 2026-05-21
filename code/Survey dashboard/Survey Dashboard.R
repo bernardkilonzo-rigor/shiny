@@ -167,7 +167,15 @@ ui <- page_navbar(
 
 #define server
 server <- function(input, output, session){
+  #reactive data 1
+  filtered_data <- reactive({
+    data <- survey_data
+  })
   
+  #reactive data 2 (with filters)
+  filtered_data2 <- reactive({
+    
+  })
 }
 
 
