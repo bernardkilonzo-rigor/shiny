@@ -174,6 +174,39 @@ server <- function(input, output, session){
   
   #reactive data 2 (with filters)
   filtered_data2 <- reactive({
+    data <- survey_data
+    
+    #Filtering by Country
+    if (!"All" %in% input$country && !is.null(input$country)) {
+      data <- data[data$country %in% input$country, ]
+    }
+    
+    #Filtering by Gender
+    if (!"All" %in% input$gender && !is.null(input$gender)) {
+      data <- data[data$gender %in% input$gender, ]
+    }
+    
+    #Filtering by Income Level
+    if (!"All" %in% input$income_level && !is.null(input$income_level)) {
+      data <- data[data$income_level %in% input$income_level, ]
+    }
+    
+    #Filtering by Highest Qualifications
+    if (!"All" %in% input$highest_qualifications && !is.null(input$highest_qualification)) {
+      data <- data[data$highest_qualification %in% input$highest_qualification, ]
+    }
+    
+    #Filtering by Employment Status
+    if (!"All" %in% input$employment_status && !is.null(input$employment_status)) {
+      data <- data[data$employment_status %in% input$employment_status, ]
+    }
+    
+    #Filtering by Age Group
+    if (!"All" %in% input$age_group && !is.null(input$age_group)) {
+      data <- data[data$age_group %in% input$age_group, ]
+    }
+    
+    return(data)
     
   })
 }
