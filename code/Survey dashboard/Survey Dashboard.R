@@ -4,6 +4,8 @@ library(shiny)
 library(bslib)
 library(janitor)
 library(tidyverse)
+library(plotly)
+library(paletteer)
 
 #load data set
 survey_data <-read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Survey%20Data.csv")%>%
@@ -41,7 +43,12 @@ ui <- page_navbar(
           row_heights = c(1,1),
         card(
           card_header("Gender"),
-          card_body()
+          card_body(
+            plotlyOutput(
+              "gender_plot",
+              height = "250px"
+            )
+          )
         ),
         card(
           card_header("Employment Status"),
@@ -209,11 +216,29 @@ server <- function(input, output, session){
     return(data)
     
   })
+  
+  #Gender count
+  output$gender_plot <- renderPlotly({
+    
+    #aggregating count by gender
+    gender_count <- filtered_data()%>%
+      group_by(gender)%>%
+      summarise(count = n_distinct(respondent_s_id))
+    
+    #create pie chart
+    pie_chart <- gender_count%>%
+      ggplot(aes(x = "", y = count, fill = gender))+
+      geom_col(color = "white")+
+      coord_polar(theta = "y")+
+      scale_fill_paletteer_d("wesanderson::Chevalier1")+
+      theme_void()
+    
+    #convert to plotly
+    ggplotly(pie_chart)
+    
+  })
 }
 
 
 #run application
 shinyApp(ui = ui, server = server)
-
-
-
