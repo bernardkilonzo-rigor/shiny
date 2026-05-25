@@ -52,7 +52,9 @@ ui <- page_navbar(
         ),
         card(
           card_header("Employment Status"),
-          card_body()
+          card_body(
+            "employment_plot"
+          )
         )
         ),
       
@@ -235,6 +237,25 @@ server <- function(input, output, session){
     
     #convert to plotly
     ggplotly(pie_chart)
+  })
+    
+    #employment status count
+    output$employment_plot <- renderPlotly({
+      
+      #aggregating count by gender
+      employment_count <- filtered_data()%>%
+        group_by(employment_status)%>%
+        summarise(count = n_distinct(respondent_s_id))
+      
+      #create bar chart
+      employment_chart <- employment_count%>%
+        ggplot(aes(y = employment_status, x = count))+
+        geom_bar(stat = "identity", fill = employment_status)+
+        scale_fill_paletteer_d("wesanderson::Chevalier1")+
+        theme_void()
+      
+      #convert to plotly
+      ggplotly(employment_chart)
     
   })
 }
