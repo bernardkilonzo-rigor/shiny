@@ -252,10 +252,12 @@ server <- function(input, output, session){
       
       #create bar chart
       employment_chart <- employment_count%>%
-        ggplot(aes(y = employment_status, x = count))+
-        geom_bar(stat = "identity", fill = employment_status)+
+        ggplot(aes(y = employment_status, x = count, fill = employment_status))+
+        geom_bar(stat = "identity")+
         scale_fill_paletteer_d("wesanderson::Chevalier1")+
-        theme_void()
+        theme(
+          panel.background = element_blank()
+        )
       
       employment_chart
     
