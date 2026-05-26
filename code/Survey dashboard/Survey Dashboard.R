@@ -44,7 +44,7 @@ ui <- page_navbar(
         card(
           card_header("Gender"),
           card_body(
-            plotlyOutput(
+            plotOutput(
               "gender_plot",
               height = "250px"
             )
@@ -53,7 +53,10 @@ ui <- page_navbar(
         card(
           card_header("Employment Status"),
           card_body(
-            "employment_plot"
+            plotOutput(
+              "employment_plot",
+              height = "250px"
+            )
           )
         )
         ),
@@ -220,7 +223,7 @@ server <- function(input, output, session){
   })
   
   #Gender count
-  output$gender_plot <- renderPlotly({
+  output$gender_plot <- renderPlot({
     
     #aggregating count by gender
     gender_count <- filtered_data()%>%
@@ -235,12 +238,12 @@ server <- function(input, output, session){
       scale_fill_paletteer_d("wesanderson::Chevalier1")+
       theme_void()
     
-    #convert to plotly
-    ggplotly(pie_chart)
+    pie_chart
+  
   })
     
     #employment status count
-    output$employment_plot <- renderPlotly({
+    output$employment_plot <- renderPlot({
       
       #aggregating count by gender
       employment_count <- filtered_data()%>%
@@ -254,8 +257,7 @@ server <- function(input, output, session){
         scale_fill_paletteer_d("wesanderson::Chevalier1")+
         theme_void()
       
-      #convert to plotly
-      ggplotly(employment_chart)
+      employment_chart
     
   })
 }
