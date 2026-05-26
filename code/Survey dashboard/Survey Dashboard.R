@@ -77,7 +77,12 @@ ui <- page_navbar(
         ),
         card(
           card_header("Age Group"),
-          card_body()
+          card_body(
+            plotOutput(
+              "age_group_plot",
+              height = "250px"
+            )
+          )
         ),
         card(
           card_header("Income Level"),
@@ -262,6 +267,23 @@ server <- function(input, output, session){
       employment_chart
     
   })
+    
+    #age_group count (frequency)
+    output$age_group_plot <- renderPlot({
+      
+      #age_group_count
+      age_group_count <- filtered_data()%>%
+        group_by(age_group)%>%
+        summarise(count = n_distinct(respondent_s_id))
+      
+      age_group_chart <- age_group_count%>%
+        ggplot(aes(y = age_group, x = count))+
+        geom_bar(stat = "identity", fill = "gray40")+
+        theme(panel.background = element_blank())
+      
+      age_group_chart
+      
+    })
 }
 
 
