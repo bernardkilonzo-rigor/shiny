@@ -73,7 +73,12 @@ ui <- page_navbar(
         col_widths = c(4,4,4),
         card(
           card_header("Level of Qualification"),
-          card_body()
+          card_body(
+            plotOutput(
+              "highest_qualifications",
+              height = "250px"
+            )
+          )
         ),
         card(
           card_header("Age Group"),
@@ -86,7 +91,12 @@ ui <- page_navbar(
         ),
         card(
           card_header("Income Level"),
-          card_body()
+          card_body(
+            plotOutput(
+              "income_level",
+              height = "250px"
+            )
+          )
         )
       )
     )
@@ -282,6 +292,40 @@ server <- function(input, output, session){
         theme(panel.background = element_blank())
       
       age_group_chart
+      
+    })
+    
+    #highest qualification count
+    output$highest_qualifications <- renderPlot({
+      
+      #creating bar chart on qualification
+      qualification_plot <- filtered_data()%>%
+        group_by(highest_qualifications)%>%
+        summarise(count = n_distinct(respondent_s_id))%>%
+        ggplot(aes(y = highest_qualifications, x = count))+
+        geom_bar(stat = "identity", fill = "gray40")+
+        theme(
+          panel.background = element_blank()
+        )
+      
+      qualification_plot
+      
+    })
+    
+    #income level count
+    output$income_level <- renderPlot({
+      
+      #creating bar chart on income level
+      income_bar <- filtered_data()%>%
+        group_by(income_level)%>%
+        summarise(count = n_distinct(respondent_s_id))%>%
+        ggplot(aes(y = income_level, x = count))+
+        geom_bar(stat = "identity", fill = "gray40")+
+        theme(
+          panel.background = element_blank()
+        )
+      
+      income_bar
       
     })
 }
