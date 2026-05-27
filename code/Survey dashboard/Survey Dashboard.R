@@ -67,7 +67,12 @@ ui <- page_navbar(
       # right column (with merged cards)
         card(
           card_header("Location Analysis"),
-          card_body()
+          card_body(
+            leafletOutput(
+              "map",
+              height = "250px"
+            )
+          )
         )
       ),
       
