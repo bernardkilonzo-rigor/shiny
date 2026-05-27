@@ -275,9 +275,8 @@ server <- function(input, output, session){
       
       #create bar chart
       employment_chart <- employment_count%>%
-        ggplot(aes(y = employment_status, x = count, fill = employment_status))+
-        geom_bar(stat = "identity")+
-        scale_fill_paletteer_d("wesanderson::Chevalier1")+
+        ggplot(aes(y = employment_status, x = count))+
+        geom_bar(stat = "identity", fill = "gray40")+
         theme(
           panel.background = element_blank()
         )
