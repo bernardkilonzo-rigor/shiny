@@ -6,6 +6,9 @@ library(janitor)
 library(tidyverse)
 library(plotly)
 library(paletteer)
+library(sf)
+library(leaflet)
+library(rnaturalearth)
 
 #load data set
 survey_data <-read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Survey%20Data.csv")%>%
@@ -326,6 +329,40 @@ server <- function(input, output, session){
         )
       
       income_bar
+      
+    })
+    
+    #mapping frequency (count) by country
+    output$map <- renderLeaflet({
+      
+      #summarizing frequency by country
+      country_freq<- survey_data%>%
+        group_by(country)%>%
+        summarise(count = n_distinct(respondent_s_id))
+      
+      #loading world polygons as sf
+      world <- ne_countries(scale = "medium", returnclass = "sf")
+      
+      #joining frequency to world data
+      world_freq <- world%>%
+        left_join(country_freq, by = c("name"="country"))
+      
+      #computing centroids for bubble placement
+      world_freq_centroids <- st_centroid(world_freq)
+      
+      #Creating bubble map in leaflet
+      freq_map <- leaflet(world_sales_centroids) %>%
+        addTiles() %>%
+        addCircleMarkers(
+          radius = ~sqrt(count) * 3,   # bubble size
+          color = "blue",
+          fillColor = "lightblue",
+          fillOpacity = 0.7,
+          weight = 1,
+          popup = ~paste0("<b>", name, "</b><br>count: ", count)
+        )
+      
+      freq_map
       
     })
 }
