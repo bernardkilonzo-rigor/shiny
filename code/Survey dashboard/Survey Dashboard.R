@@ -273,12 +273,17 @@ server <- function(input, output, session){
         group_by(employment_status)%>%
         summarise(count = n_distinct(respondent_s_id))
       
+      #ordering employment_status by count
+      employment_count$employment_status <-reorder(employment_count$employment_status,
+                                                   employment_count$count)
+      
       #create bar chart
       employment_chart <- employment_count%>%
         ggplot(aes(y = employment_status, x = count))+
         geom_bar(stat = "identity", fill = "gray40")+
         theme(
-          panel.background = element_blank()
+          panel.background = element_blank(),
+          axis.title = element_blank()
         )
       
       employment_chart
@@ -293,10 +298,15 @@ server <- function(input, output, session){
         group_by(age_group)%>%
         summarise(count = n_distinct(respondent_s_id))
       
+      #ordering age_group by count
+      age_group_count$age_group <- reorder(age_group_count$age_group,
+                                           age_group_count$count)
+      
       age_group_chart <- age_group_count%>%
         ggplot(aes(y = age_group, x = count))+
         geom_bar(stat = "identity", fill = "gray40")+
-        theme(panel.background = element_blank())
+        theme(panel.background = element_blank(),
+              axis.title = element_blank())
       
       age_group_chart
       
