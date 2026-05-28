@@ -316,13 +316,20 @@ server <- function(input, output, session){
     output$highest_qualifications <- renderPlot({
       
       #creating bar chart on qualification
-      qualification_plot <- filtered_data()%>%
+      qualification_count <- filtered_data()%>%
         group_by(highest_qualifications)%>%
-        summarise(count = n_distinct(respondent_s_id))%>%
+        summarise(count = n_distinct(respondent_s_id))
+      
+      #reordering highest qualifications by count
+      qualification_count$highest_qualifications <- reorder(qualification_count$highest_qualifications,
+                                                            qualification_count$count)
+      #qualifications plot
+      qualification_plot <- qualification_count%>%
         ggplot(aes(y = highest_qualifications, x = count))+
         geom_bar(stat = "identity", fill = "gray40")+
         theme(
-          panel.background = element_blank()
+          panel.background = element_blank(),
+          axis.title = element_blank()
         )
       
       qualification_plot
