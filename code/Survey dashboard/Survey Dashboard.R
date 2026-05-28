@@ -339,14 +339,22 @@ server <- function(input, output, session){
     #income level count
     output$income_level <- renderPlot({
       
-      #creating bar chart on income level
-      income_bar <- filtered_data()%>%
+      #income_level count
+      income_count <- filtered_data()%>%
         group_by(income_level)%>%
-        summarise(count = n_distinct(respondent_s_id))%>%
+        summarise(count = n_distinct(respondent_s_id))
+      
+      #reordering income_level by count
+      income_count$income_level <- reorder(income_count$income_level,
+                                           income_count$count)
+      
+      #creating plot on income_level frequency
+      income_bar <- income_count%>%
         ggplot(aes(y = income_level, x = count))+
         geom_bar(stat = "identity", fill = "gray40")+
         theme(
-          panel.background = element_blank()
+          panel.background = element_blank(),
+          axis.title = element_blank()
         )
       
       income_bar
