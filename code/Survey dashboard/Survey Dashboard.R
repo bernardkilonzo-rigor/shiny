@@ -257,6 +257,7 @@ server <- function(input, output, session){
     pie_chart <- gender_count%>%
       ggplot(aes(x = "", y = count, fill = gender))+
       geom_col(color = "white")+
+      geom_text(aes(label = count), position = position_stack(vjust = 0.5))+
       coord_polar(theta = "y")+
       scale_fill_paletteer_d("wesanderson::Chevalier1")+
       theme_void()
@@ -281,9 +282,12 @@ server <- function(input, output, session){
       employment_chart <- employment_count%>%
         ggplot(aes(y = employment_status, x = count))+
         geom_bar(stat = "identity", fill = "gray40")+
+        geom_text(aes(label = count), position = position_stack(vjust = 1.08))+
         theme(
           panel.background = element_blank(),
-          axis.title = element_blank()
+          axis.title = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank()
         )
       
       employment_chart
@@ -305,8 +309,12 @@ server <- function(input, output, session){
       age_group_chart <- age_group_count%>%
         ggplot(aes(y = age_group, x = count))+
         geom_bar(stat = "identity", fill = "gray40")+
+        geom_text(aes(label = count), position = position_stack(vjust = 1.08))+
         theme(panel.background = element_blank(),
-              axis.title = element_blank())
+              axis.title = element_blank(),
+              axis.text.x = element_blank(),
+              axis.ticks.x = element_blank()
+              )
       
       age_group_chart
       
@@ -327,9 +335,12 @@ server <- function(input, output, session){
       qualification_plot <- qualification_count%>%
         ggplot(aes(y = highest_qualifications, x = count))+
         geom_bar(stat = "identity", fill = "gray40")+
+        geom_text(aes(label = count), position = position_stack(vjust = 1.08))+
         theme(
           panel.background = element_blank(),
-          axis.title = element_blank()
+          axis.title = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank()
         )
       
       qualification_plot
@@ -352,9 +363,12 @@ server <- function(input, output, session){
       income_bar <- income_count%>%
         ggplot(aes(y = income_level, x = count))+
         geom_bar(stat = "identity", fill = "gray40")+
+        geom_text(aes(label = count), position = position_stack(vjust = 1.08))+
         theme(
           panel.background = element_blank(),
-          axis.title = element_blank()
+          axis.title = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank()
         )
       
       income_bar
