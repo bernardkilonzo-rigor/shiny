@@ -286,6 +286,7 @@ server <- function(input, output, session){
         theme(
           panel.background = element_blank(),
           axis.title = element_blank(),
+          axis.text = element_text(family = "serif",size = 12, color = "gray30"),
           axis.text.x = element_blank(),
           axis.ticks.x = element_blank()
         )
@@ -312,6 +313,7 @@ server <- function(input, output, session){
         geom_text(aes(label = count), position = position_stack(vjust = 1.08))+
         theme(panel.background = element_blank(),
               axis.title = element_blank(),
+              axis.text = element_text(family = "serif",size = 12, color = "gray30"),
               axis.text.x = element_blank(),
               axis.ticks.x = element_blank()
               )
@@ -339,6 +341,7 @@ server <- function(input, output, session){
         theme(
           panel.background = element_blank(),
           axis.title = element_blank(),
+          axis.text = element_text(family = "serif",size = 12, color = "gray30"),
           axis.text.x = element_blank(),
           axis.ticks.x = element_blank()
         )
@@ -367,6 +370,7 @@ server <- function(input, output, session){
         theme(
           panel.background = element_blank(),
           axis.title = element_blank(),
+          axis.text = element_text(family = "serif",size = 12, color = "gray30"),
           axis.text.x = element_blank(),
           axis.ticks.x = element_blank()
         )
