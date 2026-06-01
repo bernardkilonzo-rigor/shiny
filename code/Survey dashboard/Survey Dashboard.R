@@ -402,8 +402,8 @@ server <- function(input, output, session){
         addTiles() %>%
         addCircleMarkers(
           radius = ~sqrt(count) * 3,   # bubble size
-          color = "blue",
-          fillColor = "lightblue",
+          color = "brown",
+          fillColor = "gold",
           fillOpacity = 0.7,
           weight = 1,
           popup = ~paste0("<b>", name, "</b><br>count: ", count)
