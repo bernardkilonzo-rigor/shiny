@@ -420,7 +420,24 @@ server <- function(input, output, session){
         group_by(q1)%>%
         summarise(count = n_distinct(respondent_s_id))
       
+      #reordering channel type by count
+      channel_count$q1 <- reorder(channel_count$q1,
+                                  channel_count$count)
       
+      #creating plot on acquisition channel frequency
+      channel_bar <- channel_count%>%
+        ggplot(aes(y = q1, x = count))+
+        geom_bar(stat = "identity", fill = "gray40")+
+        geom_text(aes(label = count), position = position_stack(vjust = 1.08))+
+        theme(
+          panel.background = element_blank(),
+          axis.title = element_blank(),
+          axis.text = element_text(family = "serif",size = 12, color = "gray30"),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank()
+        )
+      
+      channel_bar
       
     })
 }
