@@ -168,7 +168,12 @@ ui <- page_navbar(
         col_widths = c(4, 4, 4),
         card(
           card_header("Customer acquisition channels"),
-          card_body()
+          card_body(
+            plotOutput(
+              "acquisition_channel",
+              width = "250px"
+            )
+          )
         ),
         card(
           card_header("% completed the course"),
