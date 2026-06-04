@@ -186,7 +186,12 @@ ui <- page_navbar(
         ),
         card(
           card_header("Most helpful content"),
-          card_body()
+          card_body(
+            plotOutput(
+              "helpful_content",
+              width = "250px"
+            )
+          )
         )
       ),
       
@@ -467,6 +472,28 @@ server <- function(input, output, session){
         theme_minimal()
       
       course_completion_plot
+      
+    })
+    
+    #Computing the most helpful content
+    output$helpful_content <- renderPlot({
+      #computing frequency by content type
+      content_freq <- filtered_data2() %>%
+        filter(Quiz_group == "Q5")%>%
+        group_by(Responses)%>%
+        summarise(count = n_distinct(respondent_s_id))
+      
+      #Ordering frequency in descending order by response
+      content_freq$Responses <- reorder(content_freq$Responses,
+                                      content_freq$count)
+      
+      #creating the plot
+      content_plot <- content_freq%>%
+        ggplot(aes(y = Responses, x = count))+
+        geom_bar(stat = "identity")+
+        theme_minimal()
+      
+      content_plot
       
     })
 }
