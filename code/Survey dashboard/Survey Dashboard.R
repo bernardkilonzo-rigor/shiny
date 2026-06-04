@@ -421,7 +421,7 @@ server <- function(input, output, session){
     #Analyzing Quiz1 (customer acquisition channel)
     output$acquisition_channel <- renderPlot({
       #frequency by channel
-      channel_count <- filtered_data2%>%
+      channel_count <- filtered_data2()%>%
         group_by(q1)%>%
         summarise(count = n_distinct(respondent_s_id))
       
