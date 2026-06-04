@@ -177,7 +177,12 @@ ui <- page_navbar(
         ),
         card(
           card_header("% completed the course"),
-          card_body()
+          card_body(
+            plotOutput(
+              "course_complete",
+              width = "250px"
+            )
+          )
         ),
         card(
           card_header("Most helpful content"),
@@ -443,6 +448,25 @@ server <- function(input, output, session){
         )
       
       channel_bar
+      
+    })
+    
+    #computing proportion of course complete
+    output$course_complete <- renderPlot({
+      
+      #computing frequencies
+      course_freq <- filtered_data2()%>%
+        filter(Quiz_group == "Q2")%>%
+        group_by(Quiz, Responses)%>%
+        summarise(count = n_distinct(respondent_s_id))
+      
+      #creating plot
+      course_completion_plot <- course_freq%>%
+        ggplot(aes(y = Quiz, x = count, fill = Responses))+
+        geom_bar(stat = "identity", position = "stack")+
+        theme_minimal()
+      
+      course_completion_plot
       
     })
 }
