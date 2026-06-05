@@ -496,8 +496,21 @@ server <- function(input, output, session){
       content_plot
       
     })
+    
+    #visualizing level of satisfaction
+    output$satisfaction <- renderPlot({
+      #computing proportions by rating
+      satisfaction_prop <- filtered_data2()%>%
+        filter(Quiz_group == "Q3")%>%
+        group_by(Quiz, Responses)%>%
+        summarise(count = n_distinct(respondent_s_id))%>%
+        mutate(percent = count/sum(count))
+      
+    })
+    
 }
 
 
 #run application
 shinyApp(ui = ui, server = server)
+
