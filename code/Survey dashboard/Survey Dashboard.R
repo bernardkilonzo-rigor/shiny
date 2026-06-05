@@ -200,7 +200,12 @@ ui <- page_navbar(
         col_widths = c(4, 4, 4),
         card(
           card_header("Level of satisfaction"),
-          card_body()
+          card_body(
+            plotOutput(
+              "satisfaction",
+              width = "250px"
+            )
+          )
         ),
         card(
           card_header("Overall quality of materials"),
@@ -506,6 +511,14 @@ server <- function(input, output, session){
         summarise(count = n_distinct(respondent_s_id))%>%
         mutate(percent = count/sum(count))
       
+      #visualizing proportions of ratings
+      satisfaction_chart <- satisfaction_prop%>%
+        ggplot(aes(y = Quiz, x = percent, fill = Responses))+
+        geom_bar(stat = "identity", position = "stack")+
+        theme_minimal()
+      
+      satisfaction_chart
+      
     })
     
 }
@@ -513,4 +526,4 @@ server <- function(input, output, session){
 
 #run application
 shinyApp(ui = ui, server = server)
-
+  
