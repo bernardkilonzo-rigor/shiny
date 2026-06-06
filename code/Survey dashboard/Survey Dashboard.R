@@ -521,9 +521,21 @@ server <- function(input, output, session){
       
     })
     
+    #visualizing material quality
+    output$material_quality <- renderPlot({
+      #computing proportions (ratings by material)
+      satisfaction_prop <- filtered_data2()%>%
+        filter(Quiz_group == "Q4")%>%
+        group_by(Quiz, Responses)%>%
+        summarise(count = n_distinct(respondent_s_id))%>%
+        mutate(percent = count/sum(count))
+      
+      
+    })
+    
 }
 
 
 #run application
 shinyApp(ui = ui, server = server)
-  
+
