@@ -524,12 +524,19 @@ server <- function(input, output, session){
     #visualizing material quality
     output$material_quality <- renderPlot({
       #computing proportions (ratings by material)
-      satisfaction_prop <- filtered_data2()%>%
+      prop_material <- filtered_data2()%>%
         filter(Quiz_group == "Q4")%>%
         group_by(Quiz, Responses)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
         mutate(percent = count/sum(count))
       
+      #visualizing proportions of ratings by material
+      material_chart <- prop_material%>%
+        ggplot(aes(y = Quiz, x = percent, fill = Responses))+
+        geom_bar(stat = "identity", position = "stack")+
+        theme_minimal()
+      
+      material_chart
       
     })
     
@@ -538,4 +545,3 @@ server <- function(input, output, session){
 
 #run application
 shinyApp(ui = ui, server = server)
-
