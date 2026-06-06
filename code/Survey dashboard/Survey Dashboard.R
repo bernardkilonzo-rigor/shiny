@@ -209,7 +209,12 @@ ui <- page_navbar(
         ),
         card(
           card_header("Overall quality of materials"),
-          card_body()
+          card_body(
+            plotOutput(
+              "material_quality",
+              width = "250px"
+            )
+          )
         ),
         card(
           card_header("Net Promoter Score (NPS)"),
