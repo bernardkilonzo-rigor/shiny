@@ -558,6 +558,14 @@ server <- function(input, output, session){
         group_by(Q6, nps_group)%>%
         summarise(count = n_distinct(respondent_s_id))
       
+      #visualizing NPS
+      nps_viz <- nps_cat%>%
+        ggplot(aes(y = Q6, y = count, fill = nps_group))+
+        geom_bar(stat = "identity", position = "stack")+
+        theme_minimal()
+      
+      nps_viz
+      
     })
     
 }
