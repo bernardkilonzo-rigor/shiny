@@ -545,6 +545,21 @@ server <- function(input, output, session){
       
     })
     
+    #visualizing net promoters score (NPS)
+    output$nps <- renderPlot({
+      #classifying NPS categories
+      nps_cat <- filtered_data2()%>%
+        mutate(nps_group = 
+                 case_when(
+                   Values >= 9 ~ "Promoters",
+                   Values >= 7 ~ "Passive",
+                   TRUE ~ "Detractors"
+                 ))%>%
+        group_by(Q6, nps_group)%>%
+        summarise(count = n_distinct(respondent_s_id))
+      
+    })
+    
 }
 
 
