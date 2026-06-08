@@ -218,7 +218,12 @@ ui <- page_navbar(
         ),
         card(
           card_header("Net Promoter Score (NPS)"),
-          card_body()
+          card_body(
+            plotOutput(
+              "nps",
+              width = "250px"
+            )
+          )
         )
       )
     )
@@ -560,7 +565,7 @@ server <- function(input, output, session){
       
       #visualizing NPS
       nps_viz <- nps_cat%>%
-        ggplot(aes(y = Q6, y = count, fill = nps_group))+
+        ggplot(aes(y = Q6, x = count, fill = nps_group))+
         geom_bar(stat = "identity", position = "stack")+
         theme_minimal()
       
