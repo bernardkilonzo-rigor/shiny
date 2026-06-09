@@ -484,6 +484,7 @@ server <- function(input, output, session){
       course_completion_plot <- course_freq%>%
         ggplot(aes(y = Quiz, x = count, fill = Responses))+
         geom_bar(stat = "identity", position = "stack")+
+        scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme_minimal()
       
       course_completion_plot
@@ -525,6 +526,7 @@ server <- function(input, output, session){
       satisfaction_chart <- satisfaction_prop%>%
         ggplot(aes(y = Quiz, x = percent, fill = Responses))+
         geom_bar(stat = "identity", position = "stack")+
+        scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme_minimal()
       
       satisfaction_chart
@@ -544,6 +546,7 @@ server <- function(input, output, session){
       material_chart <- prop_material%>%
         ggplot(aes(y = Quiz, x = percent, fill = Responses))+
         geom_bar(stat = "identity", position = "stack")+
+        scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme_minimal()
       
       material_chart
@@ -567,6 +570,7 @@ server <- function(input, output, session){
       nps_viz <- nps_cat%>%
         ggplot(aes(y = Q6, x = count, fill = nps_group))+
         geom_bar(stat = "identity", position = "stack")+
+        scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme_minimal()
       
       nps_viz
