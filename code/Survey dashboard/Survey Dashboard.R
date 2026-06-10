@@ -35,7 +35,7 @@ ui <- page_navbar(
   # Demographic Tab
   nav_panel(
     title = "Demographic Dashboard",
-    page_fillable(
+    page_fixed(
       # left column
       layout_columns(
         col_widths = c(4, 8),
