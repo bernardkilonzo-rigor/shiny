@@ -9,6 +9,7 @@ library(paletteer)
 library(sf)
 library(leaflet)
 library(rnaturalearth)
+library(scales)
 
 #load data set
 survey_data <-read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Survey%20Data.csv")%>%
@@ -478,14 +479,20 @@ server <- function(input, output, session){
       course_freq <- filtered_data2()%>%
         filter(Quiz_group == "Q2")%>%
         group_by(Quiz, Responses)%>%
-        summarise(count = n_distinct(respondent_s_id))
+        summarise(count = n_distinct(respondent_s_id))%>%
+        mutate(pr = count/sum(count))%>%
+        mutate(percent = formattable::percent(pr))
       
       #creating plot
       course_completion_plot <- course_freq%>%
-        ggplot(aes(y = Quiz, x = count, fill = Responses))+
+        ggplot(aes(y = Quiz, x = percent, fill = Responses))+
         geom_bar(stat = "identity", position = "stack")+
+        scale_x_continuous(labels = percent_format())+
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
-        theme_minimal()
+        theme(
+          panel.background = element_blank(),
+          legend.position = "top"
+        )
       
       course_completion_plot
       
