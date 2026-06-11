@@ -534,7 +534,10 @@ server <- function(input, output, session){
         ggplot(aes(y = Quiz, x = percent, fill = Responses))+
         geom_bar(stat = "identity", position = "stack")+
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
-        theme_minimal()
+        theme(
+          panel.background = element_blank(),
+          legend.position = "top"
+        )
       
       satisfaction_chart
       
@@ -554,7 +557,10 @@ server <- function(input, output, session){
         ggplot(aes(y = Quiz, x = percent, fill = Responses))+
         geom_bar(stat = "identity", position = "stack")+
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
-        theme_minimal()
+        theme(
+          panel.background = element_blank(),
+          legend.position = "top"
+        )
       
       material_chart
       
