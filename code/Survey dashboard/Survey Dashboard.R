@@ -481,11 +481,11 @@ server <- function(input, output, session){
         group_by(Quiz, Responses)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
         mutate(pr = count/sum(count))%>%
-        mutate(percent = formattable::percent(pr))
+        mutate(Percent = formattable::percent(pr))
       
       #creating plot
       course_completion_plot <- course_freq%>%
-        ggplot(aes(y = Quiz, x = percent, fill = Responses))+
+        ggplot(aes(y = Quiz, x = Percent, fill = Responses))+
         geom_bar(stat = "identity", position = "stack")+
         scale_x_continuous(labels = percent_format())+
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
@@ -571,14 +571,20 @@ server <- function(input, output, session){
                    TRUE ~ "Detractors"
                  ))%>%
         group_by(Q6, nps_group)%>%
-        summarise(count = n_distinct(respondent_s_id))
+        summarise(count = n_distinct(respondent_s_id))%>%
+        mutate(pr = count/sum(count))%>%
+        mutate(Percent = formattable::percent(pr))
       
       #visualizing NPS
       nps_viz <- nps_cat%>%
-        ggplot(aes(y = Q6, x = count, fill = nps_group))+
+        ggplot(aes(y = Q6, x = Percent, fill = nps_group))+
         geom_bar(stat = "identity", position = "stack")+
+        scale_x_continuous(labels = percent_format())+
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
-        theme_minimal()
+        theme(
+          panel.background = element_blank(),
+          legend.position = "top"
+        )
       
       nps_viz
       
