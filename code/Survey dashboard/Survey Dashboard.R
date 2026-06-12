@@ -514,7 +514,13 @@ server <- function(input, output, session){
       content_plot <- content_freq%>%
         ggplot(aes(y = Responses, x = count))+
         geom_bar(stat = "identity")+
-        theme_minimal()
+        geom_text(aes(label = count), position = position_stack(vjust = 1.3))+
+        theme(
+          panel.background = element_blank(),
+          axis.title = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank()
+        )
       
       content_plot
       
@@ -536,7 +542,8 @@ server <- function(input, output, session){
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme(
           panel.background = element_blank(),
-          legend.position = "top"
+          legend.position = "top",
+          axis.title.y = element_blank()
         )
       
       satisfaction_chart
@@ -559,7 +566,8 @@ server <- function(input, output, session){
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme(
           panel.background = element_blank(),
-          legend.position = "top"
+          legend.position = "top",
+          axis.title.y = element_blank()
         )
       
       material_chart
@@ -589,7 +597,8 @@ server <- function(input, output, session){
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme(
           panel.background = element_blank(),
-          legend.position = "top"
+          legend.position = "top",
+          axis.title.y = element_blank()
         )
       
       nps_viz
