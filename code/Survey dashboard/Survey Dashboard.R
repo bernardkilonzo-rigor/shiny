@@ -282,15 +282,18 @@ server <- function(input, output, session){
     #aggregating count by gender
     gender_count <- filtered_data()%>%
       group_by(gender)%>%
-      summarise(count = n_distinct(respondent_s_id))
+      summarise(count = n_distinct(respondent_s_id))%>%
+      mutate(pr = count/sum(count))%>%
+      mutate(Percent = scales::percent(pr, accuracy = 0.1))
     
     #create pie chart
     pie_chart <- gender_count%>%
       ggplot(aes(x = "", y = count, fill = gender))+
       geom_col(color = "white")+
-      geom_text(aes(label = count), position = position_stack(vjust = 0.5))+
+      geom_text(aes(label = Percent), position = position_stack(vjust = 0.5))+
       coord_polar(theta = "y")+
       scale_fill_paletteer_d("wesanderson::Chevalier1")+
+      labs(fill = "Gender")+
       theme_void()
     
     pie_chart
@@ -303,7 +306,9 @@ server <- function(input, output, session){
       #aggregating count by gender
       employment_count <- filtered_data()%>%
         group_by(employment_status)%>%
-        summarise(count = n_distinct(respondent_s_id))
+        summarise(count = n_distinct(respondent_s_id))%>%
+        mutate(pr = count/sum(count))%>%
+        mutate(Percent = scales::percent(pr, accuracy = 0.1))
       
       #ordering employment_status by count
       employment_count$employment_status <-reorder(employment_count$employment_status,
@@ -313,7 +318,7 @@ server <- function(input, output, session){
       employment_chart <- employment_count%>%
         ggplot(aes(y = employment_status, x = count))+
         geom_bar(stat = "identity", fill = "gray40")+
-        geom_text(aes(label = count), position = position_stack(vjust = 1.08))+
+        geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
         theme(
           panel.background = element_blank(),
           axis.title = element_blank(),
@@ -332,7 +337,9 @@ server <- function(input, output, session){
       #age_group_count
       age_group_count <- filtered_data()%>%
         group_by(age_group)%>%
-        summarise(count = n_distinct(respondent_s_id))
+        summarise(count = n_distinct(respondent_s_id))%>%
+        mutate(pr = count/sum(count))%>%
+        mutate(Percent = scales::percent(pr, accuracy = 0.1))
       
       #ordering age_group by count
       age_group_count$age_group <- reorder(age_group_count$age_group,
@@ -341,7 +348,7 @@ server <- function(input, output, session){
       age_group_chart <- age_group_count%>%
         ggplot(aes(y = age_group, x = count))+
         geom_bar(stat = "identity", fill = "gray40")+
-        geom_text(aes(label = count), position = position_stack(vjust = 1.08))+
+        geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
         theme(panel.background = element_blank(),
               axis.title = element_blank(),
               axis.text = element_text(family = "serif",size = 12, color = "gray30"),
@@ -359,7 +366,9 @@ server <- function(input, output, session){
       #creating bar chart on qualification
       qualification_count <- filtered_data()%>%
         group_by(highest_qualifications)%>%
-        summarise(count = n_distinct(respondent_s_id))
+        summarise(count = n_distinct(respondent_s_id))%>%
+        mutate(pr = count/sum(count))%>%
+        mutate(Percent = scales::percent(pr))
       
       #reordering highest qualifications by count
       qualification_count$highest_qualifications <- reorder(qualification_count$highest_qualifications,
@@ -368,7 +377,7 @@ server <- function(input, output, session){
       qualification_plot <- qualification_count%>%
         ggplot(aes(y = highest_qualifications, x = count))+
         geom_bar(stat = "identity", fill = "gray40")+
-        geom_text(aes(label = count), position = position_stack(vjust = 1.08))+
+        geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
         theme(
           panel.background = element_blank(),
           axis.title = element_blank(),
@@ -387,7 +396,9 @@ server <- function(input, output, session){
       #income_level count
       income_count <- filtered_data()%>%
         group_by(income_level)%>%
-        summarise(count = n_distinct(respondent_s_id))
+        summarise(count = n_distinct(respondent_s_id))%>%
+        mutate(pr = count/sum(count))%>%
+        mutate(Percent = scales::percent(pr))
       
       #reordering income_level by count
       income_count$income_level <- reorder(income_count$income_level,
@@ -397,7 +408,7 @@ server <- function(input, output, session){
       income_bar <- income_count%>%
         ggplot(aes(y = income_level, x = count))+
         geom_bar(stat = "identity", fill = "gray40")+
-        geom_text(aes(label = count), position = position_stack(vjust = 1.08))+
+        geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
         theme(
           panel.background = element_blank(),
           axis.title = element_blank(),
