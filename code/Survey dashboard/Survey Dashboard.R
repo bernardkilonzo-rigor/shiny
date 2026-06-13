@@ -427,7 +427,9 @@ server <- function(input, output, session){
       #summarizing frequency by country
       country_freq<- survey_data%>%
         group_by(country)%>%
-        summarise(count = n_distinct(respondent_s_id))
+        summarise(count = n_distinct(respondent_s_id))%>%
+        mutate(pr = count/sum(count))%>%
+        mutate(Percent = scales::percent(pr))
       
       #loading world polygons as sf
       world <- ne_countries(scale = "medium", returnclass = "sf")
@@ -460,7 +462,9 @@ server <- function(input, output, session){
       #frequency by channel
       channel_count <- filtered_data2()%>%
         group_by(q1)%>%
-        summarise(count = n_distinct(respondent_s_id))
+        summarise(count = n_distinct(respondent_s_id))%>%
+        mutate(pr = count/sum(count))%>%
+        mutate(Percent = scales::percent(pr, accuracy = 0.1))
       
       #reordering channel type by count
       channel_count$q1 <- reorder(channel_count$q1,
@@ -470,7 +474,7 @@ server <- function(input, output, session){
       channel_bar <- channel_count%>%
         ggplot(aes(y = q1, x = count))+
         geom_bar(stat = "identity", fill = "gray40")+
-        geom_text(aes(label = count), position = position_stack(vjust = 1.08))+
+        geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
         theme(
           panel.background = element_blank(),
           axis.title = element_blank(),
@@ -515,7 +519,9 @@ server <- function(input, output, session){
       content_freq <- filtered_data2() %>%
         filter(Quiz_group == "Q5")%>%
         group_by(Responses)%>%
-        summarise(count = n_distinct(respondent_s_id))
+        summarise(count = n_distinct(respondent_s_id))%>%
+        mutate(pr = count/sum(count))%>%
+        mutate(Percent = scales::percent(pr, accuracy = 0.1))
       
       #Ordering frequency in descending order by response
       content_freq$Responses <- reorder(content_freq$Responses,
@@ -525,7 +531,7 @@ server <- function(input, output, session){
       content_plot <- content_freq%>%
         ggplot(aes(y = Responses, x = count))+
         geom_bar(stat = "identity")+
-        geom_text(aes(label = count), position = position_stack(vjust = 1.3))+
+        geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
         theme(
           panel.background = element_blank(),
           axis.title = element_blank(),
