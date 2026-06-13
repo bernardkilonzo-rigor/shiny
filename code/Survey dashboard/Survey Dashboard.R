@@ -518,6 +518,7 @@ server <- function(input, output, session){
       #computing frequency by content type
       content_freq <- filtered_data2() %>%
         filter(Quiz_group == "Q5")%>%
+        filter(!is.na(Responses), trimws(Responses) != "")%>%
         group_by(Responses)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
         mutate(pr = count/sum(count))%>%
