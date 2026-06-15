@@ -172,7 +172,7 @@ ui <- page_navbar(
           card_body(
             plotOutput(
               "acquisition_channel",
-              width = "250px"
+              width = "100%"
             )
           )
         ),
@@ -181,7 +181,7 @@ ui <- page_navbar(
           card_body(
             plotOutput(
               "course_complete",
-              width = "250px"
+              width = "100%"
             )
           )
         ),
@@ -190,7 +190,7 @@ ui <- page_navbar(
           card_body(
             plotOutput(
               "helpful_content",
-              width = "250px"
+              width = "100%"
             )
           )
         )
@@ -204,7 +204,7 @@ ui <- page_navbar(
           card_body(
             plotOutput(
               "satisfaction",
-              width = "250px"
+              width = "100%"
             )
           )
         ),
@@ -213,7 +213,7 @@ ui <- page_navbar(
           card_body(
             plotOutput(
               "material_quality",
-              width = "250px"
+              width = "100%"
             )
           )
         ),
@@ -222,7 +222,7 @@ ui <- page_navbar(
           card_body(
             plotOutput(
               "nps",
-              width = "250px"
+              width = "100%"
             )
           )
         )
@@ -506,7 +506,8 @@ server <- function(input, output, session){
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme(
           panel.background = element_blank(),
-          legend.position = "top"
+          legend.position = "top",
+          legend.title = element_blank()
         )
       
       course_completion_plot
@@ -561,6 +562,7 @@ server <- function(input, output, session){
         theme(
           panel.background = element_blank(),
           legend.position = "top",
+          legend.title = element_blank(),
           axis.title.y = element_blank()
         )
       
@@ -585,6 +587,7 @@ server <- function(input, output, session){
         theme(
           panel.background = element_blank(),
           legend.position = "top",
+          legend.title = element_blank(),
           axis.title.y = element_blank()
         )
       
@@ -616,6 +619,7 @@ server <- function(input, output, session){
         theme(
           panel.background = element_blank(),
           legend.position = "top",
+          legend.title = element_blank(),
           axis.title.y = element_blank()
         )
       
