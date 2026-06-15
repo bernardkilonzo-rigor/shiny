@@ -317,7 +317,7 @@ server <- function(input, output, session){
       #create bar chart
       employment_chart <- employment_count%>%
         ggplot(aes(y = employment_status, x = count))+
-        geom_bar(stat = "identity", fill = "#FED789")+
+        geom_bar(stat = "identity", fill = "#FED789", width = 0.55)+
         geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
         theme(
           panel.background = element_blank(),
@@ -347,7 +347,7 @@ server <- function(input, output, session){
       
       age_group_chart <- age_group_count%>%
         ggplot(aes(y = age_group, x = count))+
-        geom_bar(stat = "identity", fill = "#FED789")+
+        geom_bar(stat = "identity", fill = "#FED789", width = 0.7)+
         geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
         theme(panel.background = element_blank(),
               axis.title = element_blank(),
@@ -376,7 +376,7 @@ server <- function(input, output, session){
       #qualifications plot
       qualification_plot <- qualification_count%>%
         ggplot(aes(y = highest_qualifications, x = count))+
-        geom_bar(stat = "identity", fill = "#FED789")+
+        geom_bar(stat = "identity", fill = "#FED789", width = 0.7)+
         geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
         theme(
           panel.background = element_blank(),
@@ -407,7 +407,7 @@ server <- function(input, output, session){
       #creating plot on income_level frequency
       income_bar <- income_count%>%
         ggplot(aes(y = income_level, x = count))+
-        geom_bar(stat = "identity", fill = "#FED789")+
+        geom_bar(stat = "identity", fill = "#FED789", width = 0.7)+
         geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
         theme(
           panel.background = element_blank(),
