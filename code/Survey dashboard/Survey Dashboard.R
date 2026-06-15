@@ -507,7 +507,8 @@ server <- function(input, output, session){
         theme(
           panel.background = element_blank(),
           legend.position = "top",
-          legend.title = element_blank()
+          legend.title = element_blank(),
+          axis.title.y = element_blank()
         )
       
       course_completion_plot
@@ -552,11 +553,11 @@ server <- function(input, output, session){
         filter(Quiz_group == "Q3")%>%
         group_by(Quiz, Responses)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
-        mutate(percent = count/sum(count))
+        mutate(Percent = count/sum(count))
       
       #visualizing proportions of ratings
       satisfaction_chart <- satisfaction_prop%>%
-        ggplot(aes(y = Quiz, x = percent, fill = Responses))+
+        ggplot(aes(y = Quiz, x = Percent, fill = Responses))+
         geom_bar(stat = "identity", position = "stack")+
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme(
@@ -577,11 +578,11 @@ server <- function(input, output, session){
         filter(Quiz_group == "Q4")%>%
         group_by(Quiz, Responses)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
-        mutate(percent = count/sum(count))
+        mutate(Percent = count/sum(count))
       
       #visualizing proportions of ratings by material
       material_chart <- prop_material%>%
-        ggplot(aes(y = Quiz, x = percent, fill = Responses))+
+        ggplot(aes(y = Quiz, x = Percent, fill = Responses))+
         geom_bar(stat = "identity", position = "stack")+
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme(
