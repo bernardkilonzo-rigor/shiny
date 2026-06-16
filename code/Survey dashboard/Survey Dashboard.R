@@ -559,11 +559,13 @@ server <- function(input, output, session){
       satisfaction_chart <- satisfaction_prop%>%
         ggplot(aes(y = Quiz, x = Percent, fill = Responses))+
         geom_bar(stat = "identity", position = "stack")+
+        scale_x_continuous(labels = percent_format())+
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme(
           panel.background = element_blank(),
           legend.position = "top",
           legend.title = element_blank(),
+          legend.text = element_text(family = "sans", size = 7),
           axis.title.y = element_blank()
         )
       
@@ -584,11 +586,13 @@ server <- function(input, output, session){
       material_chart <- prop_material%>%
         ggplot(aes(y = Quiz, x = Percent, fill = Responses))+
         geom_bar(stat = "identity", position = "stack")+
+        scale_x_continuous(labels = percent_format())+
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme(
           panel.background = element_blank(),
           legend.position = "top",
           legend.title = element_blank(),
+          legend.text = element_text(family = "sans", size = 7),
           axis.title.y = element_blank()
         )
       
