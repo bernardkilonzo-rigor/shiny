@@ -71,7 +71,7 @@ ui <- page_navbar(
           card_body(
             leafletOutput(
               "map",
-              height = "250px"
+              height = "100%"
             )
           )
         )
