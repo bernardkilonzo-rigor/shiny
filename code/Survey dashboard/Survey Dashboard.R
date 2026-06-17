@@ -442,7 +442,7 @@ server <- function(input, output, session){
       world_freq_centroids <- st_centroid(world_freq)
       
       #Creating bubble map in leaflet
-      freq_map <- leaflet(world_sales_centroids) %>%
+      freq_map <- leaflet(world_freq_centroids) %>%
         addTiles() %>%
         addCircleMarkers(
           radius = ~sqrt(count) * 3,   # bubble size
@@ -450,7 +450,8 @@ server <- function(input, output, session){
           fillColor = "gold",
           fillOpacity = 0.7,
           weight = 1,
-          popup = ~paste0("<b>", name, "</b><br>count: ", count)
+          popup = ~paste0("<b>", name, "</b><br>Count: ", count,
+                          "</b><br> Percent: ", Percent)
         )
       
       freq_map
