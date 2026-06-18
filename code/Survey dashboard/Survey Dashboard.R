@@ -504,6 +504,8 @@ server <- function(input, output, session){
         ggplot(aes(y = Quiz, x = Percent, fill = Responses))+
         geom_bar(stat = "identity", position = "stack")+
         scale_x_continuous(labels = percent_format())+
+        geom_text(aes(label = Percent), position = position_stack(vjust = 0.5),
+                  color = "white", size =3.5)+
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme(
           panel.background = element_blank(),
