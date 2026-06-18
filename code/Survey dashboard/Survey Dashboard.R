@@ -554,13 +554,16 @@ server <- function(input, output, session){
         filter(Quiz_group == "Q3")%>%
         group_by(Quiz, Responses)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
-        mutate(Percent = count/sum(count))
+        mutate(pr = count/sum(count))%>%
+        mutate(Percent = formattable::percent(pr))
       
       #visualizing proportions of ratings
       satisfaction_chart <- satisfaction_prop%>%
         ggplot(aes(y = Quiz, x = Percent, fill = Responses))+
         geom_bar(stat = "identity", position = "stack")+
         scale_x_continuous(labels = percent_format())+
+        geom_text(aes(label = Percent), position = position_stack(vjust = 0.5),
+                  color = "white", size =3.5)+
         scale_fill_paletteer_d("nationalparkcolors::Acadia")+
         theme(
           panel.background = element_blank(),
