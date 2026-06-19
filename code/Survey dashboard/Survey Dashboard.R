@@ -318,7 +318,7 @@ server <- function(input, output, session){
       employment_chart <- employment_count%>%
         ggplot(aes(y = employment_status, x = count))+
         geom_bar(stat = "identity", fill = "#FED789", width = 0.55)+
-        geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
+        geom_text(aes(label = Percent),hjust = 1)+
         theme(
           panel.background = element_blank(),
           axis.title = element_blank(),
@@ -348,7 +348,7 @@ server <- function(input, output, session){
       age_group_chart <- age_group_count%>%
         ggplot(aes(y = age_group, x = count))+
         geom_bar(stat = "identity", fill = "#FED789", width = 0.7)+
-        geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
+        geom_text(aes(label = Percent), hjust = 1)+
         theme(panel.background = element_blank(),
               axis.title = element_blank(),
               axis.text = element_text(family = "serif",size = 12, color = "gray30"),
@@ -377,7 +377,7 @@ server <- function(input, output, session){
       qualification_plot <- qualification_count%>%
         ggplot(aes(y = highest_qualifications, x = count))+
         geom_bar(stat = "identity", fill = "#FED789", width = 0.7)+
-        geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
+        geom_text(aes(label = Percent), hjust = 1)+
         theme(
           panel.background = element_blank(),
           axis.title = element_blank(),
@@ -408,7 +408,7 @@ server <- function(input, output, session){
       income_bar <- income_count%>%
         ggplot(aes(y = income_level, x = count))+
         geom_bar(stat = "identity", fill = "#FED789", width = 0.7)+
-        geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
+        geom_text(aes(label = Percent), vjust = 1, nudge_x = -0.2)+
         theme(
           panel.background = element_blank(),
           axis.title = element_blank(),
