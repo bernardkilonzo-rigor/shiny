@@ -475,7 +475,7 @@ server <- function(input, output, session){
       channel_bar <- channel_count%>%
         ggplot(aes(y = q1, x = count))+
         geom_bar(stat = "identity", fill = "#FED789")+
-        geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
+        geom_text(aes(label = Percent), hjust = 1)+
         theme(
           panel.background = element_blank(),
           axis.title = element_blank(),
@@ -537,7 +537,7 @@ server <- function(input, output, session){
       content_plot <- content_freq%>%
         ggplot(aes(y = Responses, x = count))+
         geom_bar(stat = "identity", fill = "#FED789")+
-        geom_text(aes(label = Percent), position = position_stack(vjust = 1), nudge_y = 0.2)+
+        geom_text(aes(label = Percent), hjust = 1)+
         theme(
           panel.background = element_blank(),
           axis.title = element_blank(),
