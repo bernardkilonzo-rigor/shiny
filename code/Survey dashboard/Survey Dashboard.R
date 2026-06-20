@@ -31,7 +31,7 @@ survey_data <- survey_data%>%
 #define ui
 ui <- page_navbar(
   title = "Survey Analysis Dashboard",
-  theme = bs_theme(version = 5, bootswatch = "flatly"),
+  theme = bs_theme(version = 5, bootswatch = "yeti"),
   
   # Demographic Tab
   nav_panel(
