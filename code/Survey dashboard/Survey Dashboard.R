@@ -368,7 +368,7 @@ server <- function(input, output, session){
         group_by(highest_qualifications)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
         mutate(pr = count/sum(count))%>%
-        mutate(Percent = scales::percent(pr))
+        mutate(Percent = scales::percent(pr, accuracy =0.1))
       
       #reordering highest qualifications by count
       qualification_count$highest_qualifications <- reorder(qualification_count$highest_qualifications,
@@ -398,7 +398,7 @@ server <- function(input, output, session){
         group_by(income_level)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
         mutate(pr = count/sum(count))%>%
-        mutate(Percent = scales::percent(pr))
+        mutate(Percent = scales::percent(pr, accuracy = 0.1))
       
       #reordering income_level by count
       income_count$income_level <- reorder(income_count$income_level,
