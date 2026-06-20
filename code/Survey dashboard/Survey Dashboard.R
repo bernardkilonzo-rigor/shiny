@@ -497,7 +497,7 @@ server <- function(input, output, session){
         group_by(Quiz, Responses)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
         mutate(pr = count/sum(count))%>%
-        mutate(Percent = formattable::percent(pr))
+        mutate(Percent = formattable::percent(pr, digits = 1))
       
       #creating plot
       course_completion_plot <- course_freq%>%
@@ -557,7 +557,7 @@ server <- function(input, output, session){
         group_by(Quiz, Responses)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
         mutate(pr = count/sum(count))%>%
-        mutate(Percent = formattable::percent(pr))
+        mutate(Percent = formattable::percent(pr, digits =1))
       
       #visualizing proportions of ratings
       satisfaction_chart <- satisfaction_prop%>%
@@ -587,7 +587,7 @@ server <- function(input, output, session){
         group_by(Quiz, Responses)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
         mutate(pr = count/sum(count))%>%
-        mutate(Percent = formattable::percent(pr))
+        mutate(Percent = formattable::percent(pr, digits = 1))
       
       #visualizing proportions of ratings by material
       material_chart <- prop_material%>%
@@ -622,7 +622,7 @@ server <- function(input, output, session){
         group_by(Q6, nps_group)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
         mutate(pr = count/sum(count))%>%
-        mutate(Percent = formattable::percent(pr))
+        mutate(Percent = formattable::percent(pr, digits = 1))
       
       #visualizing NPS
       nps_viz <- nps_cat%>%
