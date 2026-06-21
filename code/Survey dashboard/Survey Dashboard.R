@@ -619,6 +619,12 @@ server <- function(input, output, session){
                    Values >= 7 ~ "Passive",
                    TRUE ~ "Detractors"
                  ))%>%
+        mutate(
+          nps_group = factor(
+            nps_group,
+            levels = c("Promoters", "Passive", "Detractors")
+          )
+        )%>%
         group_by(Q6, nps_group)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
         mutate(pr = count/sum(count))%>%
