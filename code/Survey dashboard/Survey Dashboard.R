@@ -554,6 +554,13 @@ server <- function(input, output, session){
       #computing proportions by rating
       satisfaction_prop <- filtered_data2()%>%
         filter(Quiz_group == "Q3")%>%
+        mutate(
+          Responses = factor(
+            Responses,
+            levels = c("Highly satisfied", "Satisfied", "Neutral",
+                       "Dissatisfied", "Highly dissatisfied")
+          )
+        )%>%
         group_by(Quiz, Responses)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
         mutate(pr = count/sum(count))%>%
@@ -596,6 +603,15 @@ server <- function(input, output, session){
         mutate(pr = count/sum(count))%>%
         mutate(Percent = formattable::percent(pr, digits = 1))
       
+      #Defining colors
+      color_cat <- c(
+        "Highly satisfied" = "#476F84",
+        "Satisfied" = "#A4BED5",
+        "Neutral" = "#72874E",
+        "Dissatisfied" = "#453947",
+        "Highly dissatisfied" = "#023743"
+      )
+      
       #visualizing proportions of ratings by material
       material_chart <- prop_material%>%
         ggplot(aes(y = Quiz, x = Percent, fill = Responses))+
@@ -603,7 +619,7 @@ server <- function(input, output, session){
         scale_x_continuous(labels = percent_format())+
         geom_text(aes(label = Percent), position = position_stack(vjust = 0.5),
                   color = "white", size =3.5)+
-        scale_fill_paletteer_d("nationalparkcolors::Acadia")+
+        scale_fill_manual(values = color_cat)+
         theme(
           panel.background = element_blank(),
           legend.position = "top",
