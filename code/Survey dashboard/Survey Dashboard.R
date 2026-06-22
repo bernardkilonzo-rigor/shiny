@@ -584,6 +584,13 @@ server <- function(input, output, session){
       #computing proportions (ratings by material)
       prop_material <- filtered_data2()%>%
         filter(Quiz_group == "Q4")%>%
+        mutate(
+          Responses = factor(
+            Responses,
+            levels = c("Highly satisfied", "Satisfied", "Neutral",
+                       "Dissatisfied", "Highly dissatisfied")
+          )
+        )%>%
         group_by(Quiz, Responses)%>%
         summarise(count = n_distinct(respondent_s_id))%>%
         mutate(pr = count/sum(count))%>%
