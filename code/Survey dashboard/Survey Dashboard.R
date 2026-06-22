@@ -566,6 +566,15 @@ server <- function(input, output, session){
         mutate(pr = count/sum(count))%>%
         mutate(Percent = formattable::percent(pr, digits =1))
       
+      #Defining colors
+      color_cat <- c(
+        "Highly satisfied" = "#476F84",
+        "Satisfied" = "#A4BED5",
+        "Neutral" = "#72874E",
+        "Dissatisfied" = "#453947",
+        "Highly dissatisfied" = "#023743"
+      )
+      
       #visualizing proportions of ratings
       satisfaction_chart <- satisfaction_prop%>%
         ggplot(aes(y = Quiz, x = Percent, fill = Responses))+
@@ -573,7 +582,7 @@ server <- function(input, output, session){
         scale_x_continuous(labels = percent_format())+
         geom_text(aes(label = Percent), position = position_stack(vjust = 0.5),
                   color = "white", size =3.5)+
-        scale_fill_paletteer_d("nationalparkcolors::Acadia")+
+        scale_fill_manual(values = color_cat)+
         theme(
           panel.background = element_blank(),
           legend.position = "top",
